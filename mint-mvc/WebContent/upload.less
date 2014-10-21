@@ -1,0 +1,53 @@
+.file_item{
+	padding:3px;
+	width:400px;
+	border:1px solid #ccc;
+	position:relative;
+	
+	span{
+		display: inline-block;
+		vertical-align:middle;
+	}
+	
+	input{
+		display:none;
+	}
+	
+	.process{
+		box-sizing:border-box;
+		position:absolute;
+		background:#CCFF99;
+		height:100%;
+		z-index:-1;
+		left:0;
+		top:0;
+	}
+	
+	.file_info{
+		margin-right:60px;
+		
+		.filename{
+			width:200px;
+			white-space: nowrap;
+			overflow:hidden;
+			text-overflow:ellipsis;
+		}
+	}
+	
+	.upload_toolbar{
+		float:right;
+		font-size:0;
+		
+		span{
+			display:inline-block;
+			width:20px;
+			background:green;
+			cursor:pointer;
+			height:20px;
+		}
+		
+		.start{
+			margin-left:4px;
+		}
+	}
+}
