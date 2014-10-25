@@ -60,7 +60,7 @@ public class GetArgumentName {
             if (list != null && list.size() != size)
                 return list.subList(0, size);
             return list;
-        } catch (Throwable e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

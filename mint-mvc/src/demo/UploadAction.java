@@ -4,7 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import mint.mvc.core.annotation.BaseMapping;
 import mint.mvc.core.annotation.Mapping;
-import mint.mvc.core.upload.MultipartConfig;
+import mint.mvc.core.annotation.MultipartConfig;
 import mint.mvc.core.upload.MultipartParameter;
 
 @BaseMapping("/upload")

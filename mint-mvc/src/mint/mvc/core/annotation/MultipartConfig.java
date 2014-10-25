@@ -1,4 +1,4 @@
-package mint.mvc.core.upload;
+package mint.mvc.core.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -19,8 +19,8 @@ import javax.servlet.http.HttpSession;
 
 import mint.mvc.converter.ConverterFactory;
 import mint.mvc.core.annotation.InterceptorOrder;
+import mint.mvc.core.annotation.MultipartConfig;
 import mint.mvc.core.upload.FileUpload;
-import mint.mvc.core.upload.MultipartConfig;
 import mint.mvc.core.upload.MultipartHttpServletRequest;
 import mint.mvc.core.upload.MultipartParameter;
 import mint.mvc.renderer.Renderer;
@@ -31,6 +31,12 @@ import mint.mvc.template.TemplateFactory;
 import com.alibaba.fastjson.JSON;
 import com.sun.istack.internal.logging.Logger;
 
+/**
+ * @author LW
+ * action的执行者。将请求传递过来的参数经过友好的封装，
+ * 整理成action方法的参数，然后调用action方法，并且对
+ * 方法的返回值做处理后返回
+ */
 class ActionExecutor {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
@@ -43,6 +49,20 @@ class ActionExecutor {
 	private Interceptor[] interceptors = null;
 	
 	private ConverterFactory converterFactory = new ConverterFactory();
+	
+	/**
+	 * @param config
+	 * @throws ServletException
+	 */
+	void init(Config config) throws ServletException {
+		logger.info("Init Dispatcher...");
+		this.servletContext = config.getServletContext();
+		try {
+			initAll(config);
+		} catch (Exception e) {
+			throw new ServletException("Dispatcher init failed.", e);
+		}
+	}
 	
 	/**
 	 * 调用action方法
@@ -63,7 +83,7 @@ class ActionExecutor {
 		}
 	}
 	
-	public void executeAction(HttpServletRequest request, HttpServletResponse response, Action action) throws ServletException, IOException{
+	void executeAction(HttpServletRequest request, HttpServletResponse response, Action action) throws ServletException, IOException{
 		ActionContext.setActionContext(servletContext, request, response);
 		
 		/* 拦截器链 */
@@ -116,20 +136,6 @@ class ActionExecutor {
 				ActionContext.removeActionContext();
 				handleException(request, response, e);
 			}
-		}
-	}
-	
-	/**
-	 * @param config
-	 * @throws ServletException
-	 */
-	void init(Config config) throws ServletException {
-		logger.info("Init Dispatcher...");
-		this.servletContext = config.getServletContext();
-		try {
-			initAll(config);
-		} catch (Exception e) {
-			throw new ServletException("Dispatcher init failed.", e);
 		}
 	}
 	
