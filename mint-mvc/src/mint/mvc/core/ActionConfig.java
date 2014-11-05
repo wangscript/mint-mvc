@@ -11,7 +11,6 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 import mint.mvc.core.annotation.MultipartConfig;
 import mint.mvc.core.annotation.ReturnJson;
@@ -29,7 +28,7 @@ class ActionConfig {
 	/**
 	 * 声明的内置变量
 	 */
-	public static final Class<?>[] builtInObjects = {HttpServletRequest.class, HttpServletResponse.class, Session.class, Cookie.class};
+	public static final Class<?>[] builtInObjects = {HttpServletRequest.class, HttpServletResponse.class, HttpSession.class, Cookie.class};
 	
     /**
      * Object instance.
