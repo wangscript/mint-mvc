@@ -28,7 +28,7 @@ class ActionDetector {
 	 * @param beans
 	 * @return
 	 */
-	public void awareActionMethodFromBeans(Set<Object> beans) {
+	void awareActionMethodFromBeans(Set<Object> beans) {
 		for(Object bean : beans){
 			awareActionFromBean(bean);
 		}

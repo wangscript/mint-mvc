@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
  */
-public class DefaultExceptionHandler implements ExceptionHandler {
+class DefaultExceptionHandler implements ExceptionHandler {
 
     /**
      * Handle exception that print stack trace on HTML page.

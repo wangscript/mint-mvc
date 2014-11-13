@@ -28,7 +28,7 @@ class ActionConfig {
 	/**
 	 * 声明的内置变量
 	 */
-	public static final Class<?>[] builtInObjects = {HttpServletRequest.class, HttpServletResponse.class, HttpSession.class, Cookie.class};
+	static final Class<?>[] builtInObjects = {HttpServletRequest.class, HttpServletResponse.class, HttpSession.class, Cookie.class};
 	
     /**
      * Object instance.
@@ -70,7 +70,7 @@ class ActionConfig {
     
     Map<Class<?>, Integer> builtInArgument = null;
     
-    public ActionConfig(Object instance, Method actionMethod, int[] urlArgumentOrder) {
+    ActionConfig(Object instance, Method actionMethod, int[] urlArgumentOrder) {
         this.instance 		= instance;
         this.actionMethod 	= actionMethod;
         this.argumentTypes 	= actionMethod.getParameterTypes();

@@ -16,20 +16,20 @@ import com.alibaba.fastjson.JSON;
  * 参数注射器，负责把前台参数注射入对应的对象内部
  * @author LW
  */
-public class ParameterInjector {
+class ParameterInjector {
 	/**
 	 * parameter's index in action method's parameters.
 	 */
-	protected final int 						argumentIndex;
-	protected final Class<?> 					argumentType;
-	protected final String						argumentName;
-	protected final Map<String ,SetterInfo> 	settersMap  	= new HashMap<String ,SetterInfo>();
+	final int 						argumentIndex;
+	final Class<?> 					argumentType;
+	final String						argumentName;
+	final Map<String ,SetterInfo> 	settersMap  	= new HashMap<String ,SetterInfo>();
 	
 	/*
 	 * 基础类型和String 类型和数组不需要注射
 	 */
-	protected final boolean 					needInject;
-	protected final boolean						isArray;	
+	final boolean 					needInject;
+	final boolean						isArray;	
 	
 	ParameterInjector(int argumentIndex, Class<?> argumentType, String argumentName){
 		this.argumentIndex = argumentIndex;
@@ -62,7 +62,7 @@ public class ParameterInjector {
 	 * 
 	 */
 	@SuppressWarnings("unchecked")
-	public <T> T  inject(T instance, String value, String key){
+	<T> T  inject(T instance, String value, String key){
 		SetterInfo s = settersMap.get(key);
 		/*JSON to OBJECT*/
 		if(s.isJSON){
@@ -81,7 +81,7 @@ public class ParameterInjector {
 	/**
 	 * @return keys to access current injector
 	 */
-	public Set<String> getKeys(){
+	Set<String> getKeys(){
 		return settersMap.keySet();
 	}
 	

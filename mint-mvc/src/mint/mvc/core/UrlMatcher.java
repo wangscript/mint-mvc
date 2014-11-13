@@ -37,7 +37,7 @@ final class UrlMatcher {
      * 
      * @param url Url may contains {name}, {id}, ... {..}.
      */
-    public UrlMatcher(String url, Method actionMethod) {
+    UrlMatcher(String url, Method actionMethod) {
     	List<String> argumentNames 	= GetArgumentName.getArgumentNames(actionMethod);
         this.url 				= url;
         Matcher matcher 		= Pattern.compile("\\{\\w+\\}").matcher(url);
@@ -122,7 +122,7 @@ final class UrlMatcher {
      * @param url The target url.
      * @return String[] array or null if url is not match.
      */
-    public String[] getUrlParameters(String url) {
+    String[] getUrlParameters(String url) {
         Matcher m = pattern.matcher(url);
         if (!m.matches()){
             return null;

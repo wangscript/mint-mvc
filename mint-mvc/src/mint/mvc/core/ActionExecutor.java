@@ -184,7 +184,8 @@ class ActionExecutor {
 			name = JspTemplateFactory.class.getName();
 			logger.info("No template factory specified. Default to '" + name + "'.");
 		}
-		TemplateFactory tf = Utils.createTemplateFactory(name);
+		Utils util = new Utils();
+		TemplateFactory tf = util.createTemplateFactory(name);
 		tf.init(config);
 		logger.info("Template factory '" + tf.getClass().getName() + "' init ok.");
 		TemplateFactory.setTemplateFactory(tf);

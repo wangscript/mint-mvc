@@ -8,10 +8,10 @@ import mint.mvc.core.annotation.BaseMapping;
 import mint.mvc.core.annotation.InterceptorMapping;
 import mint.mvc.util.ClassScaner;
 
-public class ComponentScaner {
+class ComponentScaner {
 	private Logger logger = Logger.getLogger(ComponentScaner.class.getName());
 	
-	public Set<Interceptor> getInteceptorBeans(Config config){
+	Set<Interceptor> getInteceptorBeans(Config config){
 		String param = config.getInitParameter("actionPackages");
 		
 		if(param != null && !param.equals("")){
@@ -62,7 +62,7 @@ public class ComponentScaner {
 	/**
 	 * Find all beans in container.
 	 */
-	public Set<Object> getActionBeans(Config config){
+	Set<Object> getActionBeans(Config config){
 		String param = config.getInitParameter("actionPackages");
 		
 		if(param != null && !param.equals("")){

@@ -5,21 +5,21 @@ package mint.mvc.core;
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
  */
-public class ConfigException extends IllegalArgumentException {
+class ConfigException extends IllegalArgumentException {
 	private static final long serialVersionUID = 1L;
 
-	public ConfigException() {
+	ConfigException() {
     }
 
-    public ConfigException(String message) {
+    ConfigException(String message) {
         super(message);
     }
 
-    public ConfigException(Throwable cause) {
+    ConfigException(Throwable cause) {
         super(cause);
     }
 
-    public ConfigException(String message, Throwable cause) {
+    ConfigException(String message, Throwable cause) {
         super(message, cause);
     }
 

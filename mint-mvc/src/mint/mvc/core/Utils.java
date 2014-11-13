@@ -10,7 +10,7 @@ import com.sun.istack.internal.logging.Logger;
  * @author Michael Liao (askxuefeng@gmail.com)
  */
 class Utils {
-    public static TemplateFactory createTemplateFactory(String name) {
+    TemplateFactory createTemplateFactory(String name) {
         TemplateFactory tf = tryInitTemplateFactory(name);
         if (tf==null)
             tf = tryInitTemplateFactory(TemplateFactory.class.getPackage().getName() + "." + name + TemplateFactory.class.getSimpleName());
@@ -21,7 +21,7 @@ class Utils {
         return tf;
     }
 
-    static TemplateFactory tryInitTemplateFactory(String clazz) {
+    TemplateFactory tryInitTemplateFactory(String clazz) {
         try {
             Object obj = Class.forName(clazz).newInstance();
             if (obj instanceof TemplateFactory)

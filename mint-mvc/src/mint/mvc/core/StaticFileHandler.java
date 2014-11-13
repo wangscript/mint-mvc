@@ -32,7 +32,7 @@ class StaticFileHandler {
      * @param config
      * @throws ServletException
      */
-    public StaticFileHandler(ServletConfig config) throws ServletException {
+    StaticFileHandler(ServletConfig config) throws ServletException {
         this.servletContext = config.getServletContext();
         String expiresValue = config.getInitParameter("expires");
         if (expiresValue!=null) {
@@ -53,7 +53,7 @@ class StaticFileHandler {
      * @throws ServletException
      * @throws IOException
      */
-    public void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    void handle(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String url = request.getRequestURI();
         String path = request.getContextPath();
         url = url.substring(path.length());

@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
  */
-public interface ExceptionHandler {
+interface ExceptionHandler {
 
     /**
      * Handle exception when exception occurs.
