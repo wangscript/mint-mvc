@@ -24,12 +24,10 @@ import com.sun.istack.internal.logging.Logger;
 class Dispatcher {
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-	private UrlMatcher[] getMatchers = null;
-	private UrlMatcher[] postMatchers = null;
-	private Map<UrlMatcher, ActionConfig> getUrlMap = new HashMap<UrlMatcher, ActionConfig>();
-	private Map<UrlMatcher, ActionConfig> postUrlMap = new HashMap<UrlMatcher, ActionConfig>();
-
-	public void init(Config config) throws ServletException {
+	private Map<String, Map<UrlMatcher, ActionConfig>> urlMapMap;
+	private Map<String, UrlMatcher[]> matchersMap;
+	
+	void init(Config config) throws ServletException {
 		logger.info("Init Dispatcher...");
 		try {
 			initAll(config);
@@ -47,7 +45,7 @@ class Dispatcher {
 	 * @throws ServletException
 	 * @throws IOException
 	 */
-	public Action dispatch(HttpServletRequest request) throws ServletException, IOException {
+	Action dispatch(HttpServletRequest request) throws ServletException, IOException {
 		String url 	= request.getRequestURI();
 		String path = request.getContextPath();
 		
@@ -65,24 +63,14 @@ class Dispatcher {
 		String[] 		urlArgs 		= null;
 		
 		/* 寻找处理请求的程序（方法） */
-		if ("GET".endsWith(reqMethod)) {
-			for (UrlMatcher m : this.getMatchers) {
-				urlArgs = m.getUrlParameters(url);
-				if (urlArgs != null) {
-					actionConfig = getUrlMap.get(m);
-					break;
-				}
-			}
-		} else if ("POST".equals(reqMethod)) {
-			for (UrlMatcher m : this.postMatchers) {
-				urlArgs = m.getUrlParameters(url);
-				if (urlArgs != null) {
-					actionConfig = postUrlMap.get(m);
-					break;
-				}
+		for (UrlMatcher m : this.matchersMap.get(reqMethod)) {
+			urlArgs = m.getUrlParameters(url);
+			if (urlArgs != null) {
+				actionConfig = urlMapMap.get(reqMethod).get(m);
+				break;
 			}
 		}
-
+		
 		if(actionConfig != null){
 			return new Action(actionConfig, urlArgs, url);
 		}
@@ -108,18 +96,26 @@ class Dispatcher {
 		logger.info("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ start matching url ... ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
 		ActionDetector ad = new ActionDetector();
 		ad.awareActionMethodFromBeans(componentScaner.getActionBeans(config));
-		getUrlMap.putAll(ad.getGetUrlMap());
-		postUrlMap.putAll(ad.getPostUrlMap());
-		logger.info("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ end matching url ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑\n");
-
+		
+		this.urlMapMap = new HashMap<String, Map<UrlMatcher, ActionConfig>>();
+		this.urlMapMap.put("GET", ad.getUrlMap);
+		this.urlMapMap.put("POST", ad.postUrlMap);
+		this.urlMapMap.put("PUT", ad.putUrlMap);
+		this.urlMapMap.put("DELETE", ad.deleteUrlMap);
+		
 		/*
 		 * TODO 检查相同的uri有没有匹配不同action 方法
 		 */
-		this.getMatchers = getUrlMap.keySet().toArray(new UrlMatcher[getUrlMap.size()]);
-		this.postMatchers = postUrlMap.keySet().toArray(new UrlMatcher[postUrlMap.size()]);
+		this.matchersMap.put("GET", ad.getUrlMap.keySet().toArray(new UrlMatcher[ad.getUrlMap.size()]));
+		this.matchersMap.put("POST", ad.postUrlMap.keySet().toArray(new UrlMatcher[ad.postUrlMap.size()]));
+		this.matchersMap.put("PUT", ad.putUrlMap.keySet().toArray(new UrlMatcher[ad.putUrlMap.size()]));
+		this.matchersMap.put("DELETE", ad.deleteUrlMap.keySet().toArray(new UrlMatcher[ad.deleteUrlMap.size()]));
+		
+		logger.info("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ end matching url ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑\n");
+
 	}
 
-	public void destroy() {
+	void destroy() {
 		logger.info("Destroy Dispatcher...");
 	}
 }
