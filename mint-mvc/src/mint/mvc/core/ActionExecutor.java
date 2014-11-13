@@ -65,14 +65,6 @@ class ActionExecutor {
 	}
 	
 	/**
-	 * @param config
-	 */
-	void initAll(Config config){
-		initInterceptors(config);
-		initTemplateFactory(config);
-	}
-	
-	/**
 	 * 调用action方法
 	 * @param actionConfig
 	 * @param arguments
@@ -146,47 +138,14 @@ class ActionExecutor {
 			}
 		}
 	}
-
-	/* 当方法出现异常时，处理异常 */
-	private void handleResult(HttpServletRequest request, HttpServletResponse response, Object result, ActionConfig actionConfig) throws Exception {
-		if (result == null) {
-			return;
-		}
-		
-		/*处理模板结果*/
-		if (result instanceof Renderer) {
-			((Renderer) result).render(this.servletContext, request, response);
-			return;
-		}
-		
-		/*处理json结果*/
-		if(actionConfig.returnJson){
-			new TextRenderer(JSON.toJSONString(result)).render(servletContext, request, response);
-			return;
-		} else {
-			new TextRenderer(result+"").render(servletContext, request, response);
-			return;
-		}
-	}
+	
 	
 	/**
-	 * 当action方法发生异常时，处理异常
-	 * @param request
-	 * @param response
-	 * @param ex
-	 * @throws ServletException
-	 * @throws IOException
+	 * @param config
 	 */
-	private void handleException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws ServletException, IOException {
-		try {
-			exceptionHandler.handle(request, response, ex);
-		} catch (ServletException e) {
-			throw e;
-		} catch (IOException e) {
-			throw e;
-		} catch (Exception e) {
-			throw new ServletException(e);
-		}
+	void initAll(Config config){
+		initInterceptors(config);
+		initTemplateFactory(config);
 	}
 	
 	/**
@@ -334,5 +293,39 @@ class ActionExecutor {
 		}
 
 		return arguments;
+	}
+
+	/* 当方法出现异常时，处理异常 */
+	private void handleResult(HttpServletRequest request, HttpServletResponse response, Object result, ActionConfig actionConfig) throws Exception {
+		if (result == null) {
+			return;
+		}
+		
+		/*处理模板结果*/
+		if (result instanceof Renderer) {
+			((Renderer) result).render(this.servletContext, request, response);
+			return;
+		}
+		
+		/*处理json结果*/
+		if(actionConfig.returnJson){
+			new TextRenderer(JSON.toJSONString(result)).render(servletContext, request, response);
+			return;
+		} else {
+			new TextRenderer(result+"").render(servletContext, request, response);
+			return;
+		}
+	}
+	
+	private void handleException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws ServletException, IOException {
+		try {
+			exceptionHandler.handle(request, response, ex);
+		} catch (ServletException e) {
+			throw e;
+		} catch (IOException e) {
+			throw e;
+		} catch (Exception e) {
+			throw new ServletException(e);
+		}
 	}
 }

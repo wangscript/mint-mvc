@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<form action="news/12" method="get">
+	<button type="submit">get</button>
+</form>
+
+<form action="news/12" method="post">
+	<button type="submit">post</button>
+</form>
+
+<button onclick="put('put');">put</button>
+<button onclick="put('delete')">delete</button>
+
+</body>
+<script type="text/javascript" src="lib/jquery-2.0.2.min.js"></script>
+<script>
+	function put(method){
+		$.ajax({
+			url:"news/23",
+			type:method,
+			success:function(data){
+				alert(data);
+			}
+		});
+	}
+</script>
+</html>

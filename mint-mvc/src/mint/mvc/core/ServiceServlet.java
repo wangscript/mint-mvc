@@ -57,7 +57,7 @@ public class ServiceServlet extends HttpServlet {
         HttpServletResponse httpResp 	= (HttpServletResponse) resp;
         String 				method 		= httpReq.getMethod();
         
-        if ("GET".equals(method) || "POST".equals(method)) {
+        if ("GET".equals(method) || "POST".equals(method) || "PUT".equals(method) || "DELETE".equals(method)) {
         	/*进入处理请求*/
         	Action action = dispatcher.dispatch(httpReq);
             if (action != null) {

@@ -24,8 +24,8 @@ import com.sun.istack.internal.logging.Logger;
 class Dispatcher {
 	private final Logger logger = Logger.getLogger(this.getClass());
 
-	private Map<String, Map<UrlMatcher, ActionConfig>> urlMapMap;
-	private Map<String, UrlMatcher[]> matchersMap;
+	private Map<String, Map<UrlMatcher, ActionConfig>> urlMapMap = new HashMap<String, Map<UrlMatcher, ActionConfig>>();
+	private Map<String, UrlMatcher[]> matchersMap = new HashMap<String, UrlMatcher[]>();
 	
 	void init(Config config) throws ServletException {
 		logger.info("Init Dispatcher...");
@@ -97,7 +97,6 @@ class Dispatcher {
 		ActionDetector ad = new ActionDetector();
 		ad.awareActionMethodFromBeans(componentScaner.getActionBeans(config));
 		
-		this.urlMapMap = new HashMap<String, Map<UrlMatcher, ActionConfig>>();
 		this.urlMapMap.put("GET", ad.getUrlMap);
 		this.urlMapMap.put("POST", ad.postUrlMap);
 		this.urlMapMap.put("PUT", ad.putUrlMap);

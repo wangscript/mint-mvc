@@ -1,6 +1,6 @@
 package mint.mvc.core;
 
-class Action {
+public class Action {
 	ActionConfig 	actionConfig;
 	String[] 		urlParams;
 	String 			uri;
