@@ -2,10 +2,8 @@ package mint.mvc.core;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,48 +28,47 @@ final class UrlMatcher {
      * 匹配url的正则
      */
     final Pattern 	pattern;
-    final int[] 	urlArgumentOrder;
+    final int[] 	urlArgOrder;
 
     /**
      * Build UrlMatcher by given url like "/blog/{name}/{id}".
      * 
      * @param url Url may contains {name}, {id}, ... {..}.
      */
-    UrlMatcher(String url, Method actionMethod) {
-    	List<String> argumentNames 	= GetArgumentName.getArgumentNames(actionMethod);
+    UrlMatcher(String url, Method actMethod) {
+    	List<String> argNames 	= GetArgumentName.getArgumentNames(actMethod);
         this.url 				= url;
-        Matcher matcher 		= Pattern.compile("\\{\\w+\\}").matcher(url);
-    	Set<String> paramSet 	= new HashSet<String>();
-    	List<String> paramList 	= new ArrayList<String>();
-    	String urlParameterName;
-    	
-    	while (matcher.find()) {
-    		urlParameterName = matcher.group(0).replace("{", "").replace("}", "");
-    		paramSet.add(urlParameterName);
-    		paramList.add(urlParameterName);
-    	}
-    	/*检查url有没有包含相同参数名*/
-        if (paramSet.size() != paramList.size()) {
-            throw new ConfigException("uri包含同名参数");
-        }
-    	
-        this.urlArgumentOrder = new int[paramSet.size()];
-        boolean existArgument = false;
-        for(String paramName : paramList){
-        	for(int i=0; i<argumentNames.size(); i++){
-        		if(argumentNames.get(i).equals(paramName)){
-        			urlArgumentOrder[i] = i;
-        			existArgument = true;
-        		}
-        	}
-        	
-        	/*如果url中的参数名在action方法中找不到*/
-        	if(!existArgument){
-        		throw new ConfigException("action 方法:" + actionMethod.toGenericString() + " 不含有" + paramName + "参数");
-        	}
-    	}
         
-        if(checkIsActionMethod(actionMethod)){
+    	List<String> urlPList 	= new ArrayList<String>();
+    	String urlParamName;
+    	Matcher matcher 		= Pattern.compile("\\{\\w+\\}").matcher(url);
+    	while (matcher.find()) {
+    		urlParamName = matcher.group(0).replace("{", "").replace("}", "");
+    		/*检查url有没有包含相同参数名*/
+    		if(urlPList.contains(urlParamName)){
+    			throw new ConfigException("uri包含同名参数");
+    		}
+    		
+    		urlPList.add(urlParamName);
+    	}
+    	
+    	int len = urlPList.size();
+        this.urlArgOrder = new int[len];
+        
+        String uPName;
+        for(int i=0, j; i<len; i++){
+        	uPName = urlPList.get(i);
+        	j = argNames.indexOf(uPName);
+        	
+        	/*如果url中的参数名在action方法中找不到，则抛出异常*/
+        	if(j>-1){
+        		urlArgOrder[i] = j;
+        	} else {
+        		throw new ConfigException("action 方法:" + actMethod.toGenericString() + " 不含有" + uPName + "参数");
+        	}
+        }
+        
+        if(checkIsActionMethod(actMethod)){
         	matcher.reset();
         	StringBuffer sb = new StringBuffer();
         	while (matcher.find()) {
@@ -86,15 +83,20 @@ final class UrlMatcher {
         }
     }
 
+    /**
+     * 检查是否合法的action方法
+     * @param method
+     * @return
+     */
     private boolean checkIsActionMethod(Method method){
     	 /*check if the url argument type can be convert*/
         Class<?>[] argTypes = method.getParameterTypes();
-        ConverterFactory converterFactory 	= new ConverterFactory();
+        ConverterFactory cvFact 	= new ConverterFactory();
         
         Class<?> argType;
-        for (int argIndex : urlArgumentOrder) {
+        for (int argIndex : urlArgOrder) {
         	argType = argTypes[argIndex];
-            if (!converterFactory.canConvert(argTypes[argIndex])) {
+            if (!cvFact.canConvert(argTypes[argIndex])) {
             	logger.warning(method.toGenericString() + "不支持的uri参数类型" + argType.getName() + ":uri参数类型只能为基础类型或者String类型");
                 return false;
             }
@@ -106,10 +108,8 @@ final class UrlMatcher {
          * 非url参数不许为基础类型。这主要是为了防止 参数空指针的问题
          */
         for(Class<?> type : argTypes){
-        	if(type != null){
-        		if(type.isPrimitive()){
-        			throw new ConfigException(method.toGenericString() + "除了uri参数之外，所有action方法参数都不能是基础类型");
-        		}
+        	if(type != null && type.isPrimitive()){
+        		throw new ConfigException(method.toGenericString() + "除了uri参数之外，所有action方法参数都不能是基础类型");
         	}
         }
 		return true;
@@ -126,17 +126,17 @@ final class UrlMatcher {
         Matcher m = pattern.matcher(url);
         if (!m.matches()){
             return null;
-        } if (urlArgumentOrder.length == 0){
+        } if (urlArgOrder.length == 0){
             return EMPTY_STRINGS;
         }
-        String[] params = new String[urlArgumentOrder.length];
-        for (int i=0; i<urlArgumentOrder.length; i++) {
+        String[] params = new String[urlArgOrder.length];
+        for (int i=0; i<urlArgOrder.length; i++) {
             params[i] = m.group(i+1);
         }
         return params;
     }
     
-    public Map<Integer, String> getUrlParameters1(String url){
+    Map<Integer, String> getUrlParameters1(String url){
     	return null;
     }
     
@@ -150,9 +150,10 @@ final class UrlMatcher {
         return false;
     }
 
+    
+    /*简单类型的hashCode效率较高*/
     @Override
     public int hashCode() {
         return url.hashCode();
     }
-
 }

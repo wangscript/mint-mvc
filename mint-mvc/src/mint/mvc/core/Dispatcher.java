@@ -111,7 +111,6 @@ class Dispatcher {
 		this.matchersMap.put("DELETE", ad.deleteUrlMap.keySet().toArray(new UrlMatcher[ad.deleteUrlMap.size()]));
 		
 		logger.info("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ end matching url ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑\n");
-
 	}
 
 	void destroy() {

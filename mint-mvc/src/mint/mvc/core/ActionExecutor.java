@@ -218,47 +218,46 @@ class ActionExecutor {
 		Object instance;
 		Map<String, ParameterInjector> injectors = actionConfig.injectors;
 		ParameterInjector injector;
-
-		for (String paramName : paramMap.keySet()) {
-			injector = injectors.get(paramName);
-			if (injector != null) {
-				if (injector.needInject) {
-					instance = arguments[injector.argumentIndex];
-					if (instance == null) {
-						try {
+		
+		try {
+			for (String paramName : paramMap.keySet()) {
+				injector = injectors.get(paramName);
+				if (injector != null) {
+					if (injector.needInject) {
+						instance = arguments[injector.argumentIndex];
+						if (instance == null) {
 							/* instantiate a instance the first time you use */
 							instance = injector.argumentType.newInstance();
 							arguments[injector.argumentIndex] = instance;
-						} catch (InstantiationException e) {
-							e.printStackTrace();
-						} catch (IllegalAccessException e) {
-							e.printStackTrace();
 						}
-					}
-
-					instance = arguments[injector.argumentIndex] = injector.inject(instance, paramMap.get(paramName)[0], paramName);
-				} else {
-					if (injector.isArray) {
-						/*
-						 * 支持数组
-						 */
-						String array[] = paramMap.get(paramName);
-						int len = array.length;
-						Class<?> t = injector.argumentType.getComponentType();
-						Object arr = Array.newInstance(t, len);
-						for (int i = 0; i < len; i++) {
-							Array.set(arr, i, converterFactory.convert(t, array[i]));
-						}
-
-						arguments[injector.argumentIndex] = arr;
+	
+						instance = arguments[injector.argumentIndex] = injector.inject(instance, paramMap.get(paramName)[0], paramName);
 					} else {
-						/* 简单类型直接转换 */
-						arguments[injector.argumentIndex] = converterFactory.convert(injector.argumentType, paramMap.get(paramName)[0]);
+						if (injector.isArray) {
+							/*
+							 * 支持数组
+							 */
+							String array[] = paramMap.get(paramName);
+							int len = array.length;
+							Class<?> t = injector.argumentType.getComponentType();
+							Object arr = Array.newInstance(t, len);
+							for (int i = 0; i < len; i++) {
+								Array.set(arr, i, converterFactory.convert(t, array[i]));
+							}
+	
+							arguments[injector.argumentIndex] = arr;
+						} else {
+							/* 简单类型直接转换 */
+							arguments[injector.argumentIndex] = converterFactory.convert(injector.argumentType, paramMap.get(paramName)[0]);
+						}
 					}
 				}
 			}
+		} catch (InstantiationException e) {
+			e.printStackTrace();
+		} catch (IllegalAccessException e) {
+			e.printStackTrace();
 		}
-		
 		/*
 		 * 从request.getAttributeNames()初始化参数
 		 */

@@ -60,12 +60,12 @@ class ActionDetector {
 					/*如果pattern为空，则说明该action方法无法被访问到*/
 					if(matcher.pattern != null){
 						logger.info("Mapping url '" + url + "' to method '" + method.toGenericString() + "'.");
-						addAction(matcher, new ActionConfig(actionBean, method, matcher.urlArgumentOrder), mapping.method());
+						addAction(matcher, new ActionConfig(actionBean, method, matcher.urlArgOrder), mapping.method());
 						
 						/*如果该action类有index处理方法，就将该类的根url匹配到index方法*/
 						if(url.equals(baseUrl+"/index")){
 							logger.info("Mapping url '" + baseUrl + "' to method '" + method.toGenericString() + "'.");
-							addAction(new UrlMatcher(baseUrl, method), new ActionConfig(actionBean, method, matcher.urlArgumentOrder), mapping.method());
+							addAction(new UrlMatcher(baseUrl, method), new ActionConfig(actionBean, method, matcher.urlArgOrder), mapping.method());
 						}
 					}
 				}

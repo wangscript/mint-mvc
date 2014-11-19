@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
  */
 public final class ActionContext {
 
-    private static final ThreadLocal<ActionContext> actionContextThreadLocal = new ThreadLocal<ActionContext>();
+    static final ThreadLocal<ActionContext> actionContexts = new ThreadLocal<ActionContext>();
 
     private ServletContext context;
     private HttpServletRequest request;
@@ -50,7 +50,7 @@ public final class ActionContext {
      * Get current ActionContext object.
      */
     public static ActionContext getActionContext() {
-        return actionContextThreadLocal.get();
+        return actionContexts.get();
     }
 
     static void setActionContext(ServletContext context, HttpServletRequest request, HttpServletResponse response) {
@@ -58,10 +58,10 @@ public final class ActionContext {
         ctx.context = context;
         ctx.request = request;
         ctx.response = response;
-        actionContextThreadLocal.set(ctx);
+        actionContexts.set(ctx);
     }
 
     static void removeActionContext() {
-        actionContextThreadLocal.remove();
+        actionContexts.remove();
     }
 }

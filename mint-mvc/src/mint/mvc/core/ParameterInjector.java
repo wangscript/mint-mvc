@@ -1,10 +1,10 @@
 package mint.mvc.core;
 
-import java.lang.reflect.Field;
+import java.beans.IntrospectionException;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
 import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -29,7 +29,7 @@ class ParameterInjector {
 	 * 基础类型和String 类型和数组不需要注射
 	 */
 	final boolean 					needInject;
-	final boolean						isArray;	
+	final boolean					isArray;	
 	
 	ParameterInjector(int argumentIndex, Class<?> argumentType, String argumentName){
 		this.argumentIndex = argumentIndex;
@@ -51,7 +51,8 @@ class ParameterInjector {
 			needInject = result;
 		}
 		
-		initSetters();
+		if(needInject) 
+			initSetters();
 	}
 	
 	/**
@@ -59,7 +60,7 @@ class ParameterInjector {
 	 * @param instance
 	 * @param value
 	 * @param key the key for access setter method
-	 * 
+	 * TODO json框架抛警告，以后一定要干掉
 	 */
 	@SuppressWarnings("unchecked")
 	<T> T  inject(T instance, String value, String key){
@@ -87,48 +88,36 @@ class ParameterInjector {
 	
 	/**
 	 * 从action参数中分离出请求参数名和对象字段的对应关系
+	 * 使用内省获取getter和setter方法
 	 */
 	private void initSetters(){
-		if(needInject){
-			ConverterFactory converter = new ConverterFactory();
-			
-			List<Field> fields = new LinkedList<Field>();
-			Class<?> clazz = argumentType;
-			while(clazz != null){
-				for(Field field : clazz.getDeclaredFields()){
-					fields.add(field);
-				}
-				clazz = clazz.getSuperclass();
-			}
-			
+		ConverterFactory converter = new ConverterFactory();
+		
+		/*内省方式获取属性和setter*/
+		try {
+			PropertyDescriptor[] props = Introspector.getBeanInfo(argumentType, Object.class).getPropertyDescriptors();
 			Method setter;
-			String setterName;
+			Class<?> type;
 			SetterInfo sInfo;
-			for(Field f : fields){
-				if(converter.canConvert(f.getType())){
-					setterName = "set"+firstCharToUpperCase(f.getName());
-					try {
-						setter = argumentType.getMethod(setterName, f.getType());
-						/*取消虚拟机安全检查，提高方法调用效率*/
-						setter.setAccessible(true);
-						sInfo = new SetterInfo(setter, f.getType(), false);
-						settersMap.put(argumentName+"."+f.getName(), sInfo);
-					} catch (NoSuchMethodException e) {	}
+			for(PropertyDescriptor pd : props){
+				type = pd.getPropertyType();
+				
+				if(converter.canConvert(type)){
+					setter = pd.getWriteMethod();
+					/*取消虚拟机安全检查，提高方法调用效率*/
+					setter.setAccessible(true);
+					
+					sInfo = new SetterInfo(setter, type, false);
+					settersMap.put(argumentName+"."+pd.getName(), sInfo);
 				}
 			}
-			/*把本身当成一个可解析项，采用json转换*/
-			settersMap.put(argumentName, new SetterInfo(null, null, true));
-		} else {
-			settersMap.put(argumentName, null);
-			if(isArray){
-				settersMap.put(argumentName+"[]", null);
-			}
+		} catch (IntrospectionException e) {
+			e.printStackTrace();
 		}
-	}
-	
-	private String firstCharToUpperCase(String s){
-		if(s.equals("") || s == null) return s;
-		return s.substring(0, 1).toUpperCase() + s.substring(1);
+		
+		
+		/*把参数本身当成一个可解析项，采用json转换*/
+		settersMap.put(argumentName, new SetterInfo(null, null, true));
 	}
 }
 
