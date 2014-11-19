@@ -224,14 +224,14 @@ class ActionExecutor {
 				injector = injectors.get(paramName);
 				if (injector != null) {
 					if (injector.needInject) {
-						instance = arguments[injector.argumentIndex];
+						instance = arguments[injector.argIndex];
 						if (instance == null) {
 							/* instantiate a instance the first time you use */
-							instance = injector.argumentType.newInstance();
-							arguments[injector.argumentIndex] = instance;
+							instance = injector.argType.newInstance();
+							arguments[injector.argIndex] = instance;
 						}
 	
-						instance = arguments[injector.argumentIndex] = injector.inject(instance, paramMap.get(paramName)[0], paramName);
+						instance = arguments[injector.argIndex] = injector.inject(instance, paramMap.get(paramName)[0], paramName);
 					} else {
 						if (injector.isArray) {
 							/*
@@ -239,16 +239,16 @@ class ActionExecutor {
 							 */
 							String array[] = paramMap.get(paramName);
 							int len = array.length;
-							Class<?> t = injector.argumentType.getComponentType();
+							Class<?> t = injector.argType.getComponentType();
 							Object arr = Array.newInstance(t, len);
 							for (int i = 0; i < len; i++) {
 								Array.set(arr, i, converterFactory.convert(t, array[i]));
 							}
 	
-							arguments[injector.argumentIndex] = arr;
+							arguments[injector.argIndex] = arr;
 						} else {
 							/* 简单类型直接转换 */
-							arguments[injector.argumentIndex] = converterFactory.convert(injector.argumentType, paramMap.get(paramName)[0]);
+							arguments[injector.argIndex] = converterFactory.convert(injector.argType, paramMap.get(paramName)[0]);
 						}
 					}
 				}
@@ -271,8 +271,8 @@ class ActionExecutor {
 			
 			if(attribute != null){
 				injector = actionConfig.injectors.get(attributeName);
-				if(injector != null && injector.argumentType.isInstance(attribute)){
-					arguments[actionConfig.injectors.get(attributeName).argumentIndex] = attribute;
+				if(injector != null && injector.argType.isInstance(attribute)){
+					arguments[actionConfig.injectors.get(attributeName).argIndex] = attribute;
 				}
 			}
 		}

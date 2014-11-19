@@ -20,9 +20,9 @@ class ParameterInjector {
 	/**
 	 * parameter's index in action method's parameters.
 	 */
-	final int 						argumentIndex;
-	final Class<?> 					argumentType;
-	final String						argumentName;
+	final int 						argIndex;
+	final Class<?> 					argType;
+	final String					argName;
 	final Map<String ,SetterInfo> 	settersMap  	= new HashMap<String ,SetterInfo>();
 	
 	/*
@@ -31,19 +31,20 @@ class ParameterInjector {
 	final boolean 					needInject;
 	final boolean					isArray;	
 	
-	ParameterInjector(int argumentIndex, Class<?> argumentType, String argumentName){
-		this.argumentIndex = argumentIndex;
-		this.argumentType = argumentType;
-		this.argumentName = argumentName;
+	ParameterInjector(int argIndex, Class<?> argType, String argName){
+		this.argIndex = argIndex;
+		this.argType = argType;
+		this.argName = argName;
 		
-		isArray = argumentType.isArray();
+		isArray = argType.isArray();
 		
-		if(argumentType.isPrimitive() || argumentType.equals(String.class) || isArray){
+		
+		if(argType.isPrimitive() || argType.equals(String.class) || isArray){
 			needInject = false;
 		} else {
-			boolean result = true;
+			boolean result;
 			try {
-				result = !((Class<?>)argumentType.getField("TYPE").get(null)).isPrimitive();
+				result = !((Class<?>)argType.getField("TYPE").get(null)).isPrimitive();
 			} catch (Exception e) {
 				result = true;
 			}
@@ -51,8 +52,7 @@ class ParameterInjector {
 			needInject = result;
 		}
 		
-		if(needInject) 
-			initSetters();
+		initSetters();
 	}
 	
 	/**
@@ -67,7 +67,7 @@ class ParameterInjector {
 		SetterInfo s = settersMap.get(key);
 		/*JSON to OBJECT*/
 		if(s.isJSON){
-			return	 (T) JSON.toJavaObject(JSON.parseObject(value), argumentType);
+			return (T) JSON.toJavaObject(JSON.parseObject(value), argType);
 		}
 		
 		try {
@@ -91,33 +91,40 @@ class ParameterInjector {
 	 * 使用内省获取getter和setter方法
 	 */
 	private void initSetters(){
-		ConverterFactory converter = new ConverterFactory();
-		
-		/*内省方式获取属性和setter*/
-		try {
-			PropertyDescriptor[] props = Introspector.getBeanInfo(argumentType, Object.class).getPropertyDescriptors();
-			Method setter;
-			Class<?> type;
-			SetterInfo sInfo;
-			for(PropertyDescriptor pd : props){
-				type = pd.getPropertyType();
-				
-				if(converter.canConvert(type)){
-					setter = pd.getWriteMethod();
-					/*取消虚拟机安全检查，提高方法调用效率*/
-					setter.setAccessible(true);
+		if(needInject){
+			ConverterFactory converter = new ConverterFactory();
+			
+			/*内省方式获取属性和setter*/
+			try {
+				PropertyDescriptor[] props = Introspector.getBeanInfo(argType, Object.class).getPropertyDescriptors();
+				Method setter;
+				Class<?> type;
+				SetterInfo sInfo;
+				for(PropertyDescriptor pd : props){
+					type = pd.getPropertyType();
 					
-					sInfo = new SetterInfo(setter, type, false);
-					settersMap.put(argumentName+"."+pd.getName(), sInfo);
+					if(converter.canConvert(type)){
+						setter = pd.getWriteMethod();
+						/*取消虚拟机安全检查，提高方法调用效率*/
+						setter.setAccessible(true);
+						
+						sInfo = new SetterInfo(setter, type, false);
+						settersMap.put(argName+"."+pd.getName(), sInfo);
+					}
 				}
+			} catch (IntrospectionException e) {
+				e.printStackTrace();
 			}
-		} catch (IntrospectionException e) {
-			e.printStackTrace();
+			
+			/*把参数本身当成一个可解析项，采用json转换*/
+			settersMap.put(argName, new SetterInfo(null, null, true));
+		} else {
+			System.out.println(argName);
+			settersMap.put(argName, null);
+			if(isArray){
+				settersMap.put(argName+"[]", null);
+			}
 		}
-		
-		
-		/*把参数本身当成一个可解析项，采用json转换*/
-		settersMap.put(argumentName, new SetterInfo(null, null, true));
 	}
 }
 
