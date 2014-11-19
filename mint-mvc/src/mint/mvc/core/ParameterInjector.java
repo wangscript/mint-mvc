@@ -38,7 +38,6 @@ class ParameterInjector {
 		
 		isArray = argType.isArray();
 		
-		
 		if(argType.isPrimitive() || argType.equals(String.class) || isArray){
 			needInject = false;
 		} else {
@@ -119,7 +118,6 @@ class ParameterInjector {
 			/*把参数本身当成一个可解析项，采用json转换*/
 			settersMap.put(argName, new SetterInfo(null, null, true));
 		} else {
-			System.out.println(argName);
 			settersMap.put(argName, null);
 			if(isArray){
 				settersMap.put(argName+"[]", null);
