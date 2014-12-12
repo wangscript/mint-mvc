@@ -23,10 +23,18 @@ public class FileRenderer extends Renderer {
     public FileRenderer() {
     }
 
+    /**
+     * 
+     * @param file
+     */
     public FileRenderer(File file) {
         this.file = file;
     }
 
+    /**
+     * 
+     * @param file 文件路径
+     */
     public FileRenderer(String file) {
         this.file = new File(file);
     }
@@ -41,7 +49,7 @@ public class FileRenderer extends Renderer {
 
     @Override
     public void render(ServletContext context, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (file==null || !file.isFile() || file.length()>Integer.MAX_VALUE) {
+        if (file==null || !file.exists() || !file.isFile() || file.length()>Integer.MAX_VALUE) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
@@ -72,5 +80,4 @@ public class FileRenderer extends Renderer {
             }
         }
     }
-
 }

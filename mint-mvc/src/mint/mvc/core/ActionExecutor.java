@@ -1,8 +1,10 @@
 package mint.mvc.core;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLDecoder;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Enumeration;
@@ -208,9 +210,23 @@ class ActionExecutor {
 		
 		int argIndex;
 		int[] urlArgOrder = actionConfig.urlArgumentOrder; // 对应位置的参数接受从url中分离出来的参数
+		
+		String str;
 		for (int i = 0; i < urlArgs.length; i++) {
 			argIndex = urlArgOrder[i];
-			arguments[argIndex] = converterFactory.convert(actionConfig.argumentTypes[argIndex], urlArgs[i]);
+			
+			str = urlArgs[i];
+			
+			/*
+			 * 如果参数中有“%”，说明该参数被编码过，需要解码。目前只支持utf8编码的解码
+			 */
+			if(str.contains("%")){
+				try {
+					str = URLDecoder.decode(urlArgs[i],  "utf8");
+				} catch (UnsupportedEncodingException e) { }
+			}
+			
+			arguments[argIndex] = converterFactory.convert(actionConfig.argumentTypes[argIndex], str);
 		}
 
 		/* 从请求参数中初始化action方法参数(argument) */

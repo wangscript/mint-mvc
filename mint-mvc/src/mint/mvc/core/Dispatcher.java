@@ -39,6 +39,15 @@ class Dispatcher {
 	}
 
 	/**
+	 * http://example.com:8080/over/there?name=ferret#nose
+	 * \__/   \______________/\_________/ \_________/ \__/
+	 *   |         |                |         |         |
+	 * scheme   authority          path     query    fragment
+	 *
+	 * OR
+	 * 
+	 * [scheme:][//authority][path][?query][#fragment]
+	 * 
 	 * @param request
 	 * @param response
 	 * @return
@@ -46,11 +55,11 @@ class Dispatcher {
 	 * @throws IOException
 	 */
 	Action dispatch(HttpServletRequest request) throws ServletException, IOException {
-		String url 	= request.getRequestURI();
-		String path = request.getContextPath();
+		String path 	= request.getRequestURI();
+		String ctxP = request.getContextPath();
 		
-		if (path.length() > 0) {
-			url = url.substring(path.length());
+		if (ctxP.length() > 0) {
+			path = path.substring(ctxP.length());
 		}
 		
 		// set default character encoding to "utf-8" if encoding is not set:
@@ -64,7 +73,7 @@ class Dispatcher {
 		
 		/* 寻找处理请求的程序（方法） */
 		for (UrlMatcher m : this.matchersMap.get(reqMethod)) {
-			urlArgs = m.getUrlParameters(url);
+			urlArgs = m.getUrlParameters(path);
 			if (urlArgs != null) {
 				actionConfig = urlMapMap.get(reqMethod).get(m);
 				break;
@@ -72,7 +81,7 @@ class Dispatcher {
 		}
 		
 		if(actionConfig != null){
-			return new Action(actionConfig, urlArgs, url);
+			return new Action(actionConfig, urlArgs, path);
 		}
 		
 		return null;

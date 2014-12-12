@@ -68,16 +68,25 @@ final class UrlMatcher {
         	}
         }
         
+        /**
+         * TODO url匹配部分需要谨慎对待，以防出现安全问题
+         * TODO 本实现未完全遵照rfc关于url的描述，而只是rfc描述的一个很小的子集，因为还无法操控那么复杂的正则
+         */
         if(checkIsActionMethod(actMethod)){
         	matcher.reset();
         	StringBuffer sb = new StringBuffer();
+        	
+        	sb.append("^");
         	while (matcher.find()) {
-        		matcher.appendReplacement(sb, "(\\\\w+)");
+        		/*
+        		 * 这里只保证group中不包含‘/’，其他的不安全字符，假定web服务器在接受请求时已经按rfc的定义校验过
+        		 */
+        		matcher.appendReplacement(sb, "([^/]+)"); 
         	}
         	matcher.appendTail(sb);
-        	
+
         	/* "/user/name" 和 "/user/name/" 都可以匹配 */
-        	this.pattern = Pattern.compile(sb.toString()+"[/]?");
+        	this.pattern = Pattern.compile(sb.toString()+"[/]?$");
         } else {
         	this.pattern = null;
         }
