@@ -22,7 +22,7 @@ import com.sun.istack.internal.logging.Logger;
 final class UrlMatcher {
 	static final String[] 	EMPTY_STRINGS 	= new String[0];
 	static final String 	SAFE_CHARS 		= "/$-_.+!*'(),";
-	private final Logger logger = Logger.getLogger(this.getClass());
+	private final Logger 	logger = Logger.getLogger(this.getClass());
     final String  url;
     /**
      * 匹配url的正则
