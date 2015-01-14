@@ -1,6 +1,7 @@
 package mint.mvc.core;
 
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -68,7 +69,7 @@ class ActionConfig {
      */
     final Map<String ,ParameterInjector> injectors = new HashMap<String ,ParameterInjector>();
     
-    Map<Class<?>, Integer> builtInArgument = null;
+    List<BilidInArgumentInfo> builtInArguments = null;
     
     ActionConfig(Object instance, Method actionMethod, int[] urlArgumentOrder) {
         this.instance 		= instance;
@@ -127,9 +128,10 @@ class ActionConfig {
     		 * 内置参数
     		 * 包括Cookie数组、HttpServletRequest、HttpServletResponse、Session
     		 */
-    		if(type.equals(Cookie[].class) || type.equals(HttpSession.class) || type.equals(HttpServletRequest.class) || type.equals(HttpServletResponse.class)){
-    			if(builtInArgument == null) builtInArgument = new HashMap<Class<?>, Integer>(); 
-    			builtInArgument.put(type, i);
+    		if(type.equals(Cookie.class) || type.equals(Cookie[].class) || type.equals(HttpSession.class) || type.equals(HttpServletRequest.class) || type.equals(HttpServletResponse.class)){
+    			if(builtInArguments == null) builtInArguments = new ArrayList<BilidInArgumentInfo>(); 
+    			builtInArguments.add(new BilidInArgumentInfo(i, argumentNames.get(i), type));
+    			
     			continue;
     		}
 

@@ -17,7 +17,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import mint.mvc.converter.ConverterFactory;
 import mint.mvc.core.annotation.InterceptorOrder;
@@ -274,6 +273,7 @@ class ActionExecutor {
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
+		
 		/*
 		 * 从request.getAttributeNames()初始化参数
 		 */
@@ -281,29 +281,56 @@ class ActionExecutor {
 		Object attribute;
 		String attributeName;
 		injector = null;
+		injectors = actionConfig.injectors;
 		while(attributes.hasMoreElements()){
 			attributeName = attributes.nextElement();
 			attribute = req.getAttribute(attributeName);
 			
 			if(attribute != null){
-				injector = actionConfig.injectors.get(attributeName);
+				injector = injectors.get(attributeName);
+				/*attributeName and attributeType 匹配时，进行参数替换*/
 				if(injector != null && injector.argType.isInstance(attribute)){
-					arguments[actionConfig.injectors.get(attributeName).argIndex] = attribute;
+					arguments[injectors.get(attributeName).argIndex] = attribute;
 				}
 			}
 		}
 		
 		/* 初始化内置参数 */
-		if (actionConfig.builtInArgument != null) {
-			for (Class<?> type : actionConfig.builtInArgument.keySet()) {
-				if (type.equals(HttpServletRequest.class)) {
-					arguments[actionConfig.builtInArgument.get(type)] = req;
-				} else if (type.equals(HttpServletResponse.class)) {
-					arguments[actionConfig.builtInArgument.get(type)] = resp;
-				} else if (type.equals(HttpSession.class)) {
-					arguments[actionConfig.builtInArgument.get(type)] = req.getSession();
-				} else if (type.equals(Cookie[].class)) {
-					arguments[actionConfig.builtInArgument.get(type)] = req.getCookies();
+		if (actionConfig.builtInArguments != null) {
+			for (BilidInArgumentInfo info : actionConfig.builtInArguments) {
+				switch (info.typeCode) {
+					case 0:{
+						arguments[info.argIndex] = req;
+						break;
+					}
+					case 1:{
+						arguments[info.argIndex] = resp;
+						break;
+					}	
+					case 2:{
+						arguments[info.argIndex] = req.getSession();
+						break;
+					}
+					case 3:{
+						arguments[info.argIndex] = req.getCookies();
+						break;
+					}
+					case 4:{
+						Cookie[] cookies = req.getCookies();
+						
+						if(cookies!=null){
+							for(Cookie cookie : cookies){
+								if(cookie.getName().equals(info.argName)){
+									arguments[info.argIndex] = cookie;
+									break;
+								}
+							}
+						}
+						break;
+					}
+					
+					default:
+						break;
 				}
 			}
 		}
