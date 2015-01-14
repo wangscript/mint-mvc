@@ -11,6 +11,10 @@
 			<param-value>demo</param-value>
 		</init-param>
 		<init-param>
+			<param-name>uploadDir</param-name>
+			<param-value>/static/</param-value>
+		</init-param>
+		<init-param>
 			<param-name>template</param-name>
 			<param-value>Jsp</param-value>
 		</init-param>

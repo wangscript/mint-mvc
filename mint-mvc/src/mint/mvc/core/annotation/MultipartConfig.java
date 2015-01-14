@@ -9,12 +9,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface MultipartConfig {
 	/**
-	 * 保存文件的临时文件
-	 * @return
-	 */
-	String tempFilePath();
-	
-	/**
 	 * 表单上传完毕后，保存在request attribute中的名字
 	 * @return
 	 */

@@ -27,7 +27,6 @@ public class ServiceServlet extends HttpServlet {
     private Dispatcher dispatcher;
     private StaticFileHandler staticFileHandler;
     private ActionExecutor actionExecutor; 
-    private String WEBROOT;
     
     @Override
     public void init(final ServletConfig servletConfig) throws ServletException {
@@ -35,8 +34,6 @@ public class ServiceServlet extends HttpServlet {
         logger.info("Init ServiceServlet...");
         this.dispatcher = new Dispatcher();
         this.actionExecutor = new ActionExecutor();
-        
-        WEBROOT = getServletContext().getRealPath("/");
         
         Config config = new Config() {
             public String getInitParameter(String name) {
@@ -59,9 +56,6 @@ public class ServiceServlet extends HttpServlet {
         HttpServletRequest 	httpReq 	= (HttpServletRequest) req;
         HttpServletResponse httpResp 	= (HttpServletResponse) resp;
         String 				method 		= httpReq.getMethod();
-        
-        /*每个action方法都能直接获得WEBROOT参数*/
-        req.setAttribute("WEBROOT", WEBROOT);
         
         if ("GET".equals(method) || "POST".equals(method) || "PUT".equals(method) || "DELETE".equals(method)) {
         	/*进入处理请求*/

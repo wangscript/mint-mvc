@@ -86,11 +86,6 @@ class ActionConfig {
         		logger.warning(actionMethod.getName() + ":多媒体请求没有配置 attributeName");
         	}
         	
-        	if("".equals(multipartConfig.tempFilePath())){
-        		is = false;
-        		logger.warning(actionMethod.getName() + ":多媒体请求没有配置 文件临时保存目录");
-        	}
-        	
         	if(multipartConfig.limitSize() <= 0){
         		is = false;
         		logger.warning(actionMethod.getName() + ":多媒体请求没有配置 正确的limitSize");

@@ -51,6 +51,7 @@ class ActionExecutor {
 	
 	private ConverterFactory converterFactory = new ConverterFactory();
 	
+	private String uploadDir;
 	/**
 	 * @param config
 	 * @throws ServletException
@@ -58,6 +59,7 @@ class ActionExecutor {
 	void init(Config config) throws ServletException {
 		logger.info("Init Dispatcher...");
 		this.servletContext = config.getServletContext();
+		uploadDir = servletContext.getInitParameter("uploadTemp");
 		try {
 			initAll(config);
 		} catch (Exception e) {
@@ -107,7 +109,7 @@ class ActionExecutor {
 				if(action.actionConfig.isMultipartAction){
 					MultipartConfig multipartConfig = action.actionConfig.multipartConfig;
 					final Object lock = new Object();
-					boolean uploading = FileUpload.upload(multipartConfig.tempFilePath(), multipartConfig.attributeName(), multipartConfig.limitSize(), acontext, lock);
+					boolean uploading = FileUpload.upload(uploadDir, multipartConfig.attributeName(), multipartConfig.limitSize(), acontext, lock);
 					
 					/*当文件正在上传时，阻塞当前线程，待文件上传完毕时，再唤醒当前线程，达到同步效果。唤醒当前线程的代码在文件上传线程中*/
 					if(uploading){
