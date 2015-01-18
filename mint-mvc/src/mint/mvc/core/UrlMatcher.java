@@ -43,7 +43,7 @@ final class UrlMatcher {
     	String urlParamName;
     	
     	
-    	Matcher matcher 		= Pattern.compile("\\{.+\\}").matcher(url);
+    	Matcher matcher 		= Pattern.compile("\\{[^\\{^\\}]+\\}").matcher(url);
     	
     	/**
     	 * 匹配如: id:12345, name:xxxx 这样的字符串
@@ -53,6 +53,8 @@ final class UrlMatcher {
     	
     	while (matcher.find()) {
     		urlParamName = matcher.group(0).replace("{", "").replace("}", "");
+    		
+    		System.out.println(urlParamName);
     		
     		if(urlParamName.contains(":")){
     			Matcher m = regUrlParam.matcher(urlParamName);
