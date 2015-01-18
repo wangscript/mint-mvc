@@ -11,7 +11,7 @@
 			<param-value>demo</param-value>
 		</init-param>
 		<init-param>
-			<param-name>uploadDir</param-name>
+			<param-name>uploadTemp</param-name>
 			<param-value>/static/</param-value>
 		</init-param>
 		<init-param>

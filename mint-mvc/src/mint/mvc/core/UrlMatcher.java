@@ -41,9 +41,28 @@ final class UrlMatcher {
         
     	List<String> urlPList 	= new ArrayList<String>();
     	String urlParamName;
-    	Matcher matcher 		= Pattern.compile("\\{\\w+\\}").matcher(url);
+    	
+    	
+    	Matcher matcher 		= Pattern.compile("\\{.+\\}").matcher(url);
+    	
+    	/**
+    	 * 匹配如: id:12345, name:xxxx 这样的字符串
+    	 */
+    	Pattern regUrlParam		= Pattern.compile("^(\\w+)[:](.+)");
+    	
+    	
     	while (matcher.find()) {
     		urlParamName = matcher.group(0).replace("{", "").replace("}", "");
+    		
+    		if(urlParamName.contains(":")){
+    			Matcher m = regUrlParam.matcher(urlParamName);
+    			if(m.matches()){
+    				urlParamName = m.group(1);
+    			} else {
+    				throw new ConfigException("inexact regex parameter name -> " + urlParamName);
+    			}
+    		}
+    		
     		/*检查url有没有包含相同参数名*/
     		if(urlPList.contains(urlParamName)){
     			throw new ConfigException("uri包含同名参数");
@@ -55,22 +74,20 @@ final class UrlMatcher {
     	int len = urlPList.size();
         this.urlArgOrder = new int[len];
         
-        String uPName;
         for(int i=0, j; i<len; i++){
-        	uPName = urlPList.get(i);
-        	j = argNames.indexOf(uPName);
+        	urlParamName = urlPList.get(i);
+        	j = argNames.indexOf(urlParamName);
         	
         	/*如果url中的参数名在action方法中找不到，则抛出异常*/
         	if(j>-1){
         		urlArgOrder[i] = j;
         	} else {
-        		throw new ConfigException("action 方法:" + actMethod.toGenericString() + " 不含有" + uPName + "参数");
+        		//throw new ConfigException("action 方法:" + actMethod.toGenericString() + " 不含有" + uPName + "参数");
         	}
         }
         
         /**
          * TODO url匹配部分需要谨慎对待，以防出现安全问题
-         * TODO 本实现未完全遵照rfc关于url的描述，而只是rfc描述的一个很小的子集，因为还无法操控那么复杂的正则
          */
         if(checkIsActionMethod(actMethod)){
         	matcher.reset();
@@ -78,10 +95,17 @@ final class UrlMatcher {
         	
         	sb.append("^");
         	while (matcher.find()) {
-        		/*
-        		 * 这里只保证group中不包含‘/’，其他的不安全字符，假定web服务器在接受请求时已经按rfc的定义校验过
-        		 */
-        		matcher.appendReplacement(sb, "([^/]+)"); 
+        		Matcher m = regUrlParam.matcher(matcher.group(0).replace("{", "").replace("}", ""));
+        		
+        		if(m.matches()){
+        			matcher.appendReplacement(sb, "("+m.group(2)+")");
+        		} else {
+        			/*
+        			 * 这里只保证group中不包含‘/’，其他的不安全字符，假定web服务器在接受请求时已经按rfc的定义校验过
+        			 */
+        			matcher.appendReplacement(sb, "([^/]+)"); 
+        		}
+        		
         	}
         	matcher.appendTail(sb);
 
