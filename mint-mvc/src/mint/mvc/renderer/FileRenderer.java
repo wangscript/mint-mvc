@@ -19,8 +19,9 @@ import javax.servlet.http.HttpServletResponse;
 public class FileRenderer extends Renderer {
 
     private File file;
-
+    
     public FileRenderer() {
+    	
     }
 
     /**
@@ -53,6 +54,23 @@ public class FileRenderer extends Renderer {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+        
+        long ifModifiedSince = request.getDateHeader("If-Modified-Since");
+        long lastModified = file.lastModified();
+
+        if (ifModifiedSince!=(-1) && ifModifiedSince>=lastModified) { 
+            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+            return; 
+        } 
+        
+        /*静态文件缓存*/
+        response.setHeader("Connection", "keep-alive");
+        response.setHeader("Cache-Control", "public,max-age=86400");
+        
+        /*lastModified 精确到毫秒，但是ifModifiedSince只精确到秒*/
+        lastModified = lastModified+1000;
+        response.setDateHeader("Last-Modified", lastModified);
+        
         String mime = contentType;
         if (mime==null) {
             mime = context.getMimeType(file.getName());
@@ -60,6 +78,7 @@ public class FileRenderer extends Renderer {
                 mime = "application/octet-stream";
             }
         }
+        
         response.setContentType(mime);
         response.setContentLength((int)file.length());
         InputStream input = null;
@@ -69,8 +88,9 @@ public class FileRenderer extends Renderer {
             byte[] buffer = new byte[4096];
             for (;;) {
                 int n = input.read(buffer);
-                if (n==(-1))
+                if (n==(-1)){
                     break;
+                }
                 output.write(buffer, 0, n);
             }
             output.flush();

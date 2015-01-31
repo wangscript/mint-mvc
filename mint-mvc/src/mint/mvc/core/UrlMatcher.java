@@ -54,8 +54,6 @@ final class UrlMatcher {
     	while (matcher.find()) {
     		urlParamName = matcher.group(0).replace("{", "").replace("}", "");
     		
-    		System.out.println(urlParamName);
-    		
     		if(urlParamName.contains(":")){
     			Matcher m = regUrlParam.matcher(urlParamName);
     			if(m.matches()){
