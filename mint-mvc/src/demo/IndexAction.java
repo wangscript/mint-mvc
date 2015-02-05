@@ -10,4 +10,10 @@ public class IndexAction {
 	public String index(String fileName, String test){
 		return fileName+" "+test;
 	}
+	
+	@Mapping(urls="/chn", method="get")
+	public String chn(String chn){
+		
+		return chn;
+	}
 }

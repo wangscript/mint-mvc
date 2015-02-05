@@ -64,9 +64,9 @@ public class FileRenderer extends Renderer {
         } 
         
         /*静态文件缓存*/
+        response.setHeader("Accept-Ranges", "bytes");
         response.setHeader("Connection", "keep-alive");
-        response.setHeader("Cache-Control", "public,max-age=86400");
-        
+        response.setHeader("Cache-Control", "max-age=86400,must-revalidate");
         /*lastModified 精确到毫秒，但是ifModifiedSince只精确到秒*/
         lastModified = lastModified+1000;
         response.setDateHeader("Last-Modified", lastModified);

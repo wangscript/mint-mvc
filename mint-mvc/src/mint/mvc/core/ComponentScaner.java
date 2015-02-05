@@ -12,12 +12,14 @@ class ComponentScaner {
 	private Logger logger = Logger.getLogger(ComponentScaner.class.getName());
 	
 	Set<Interceptor> getInteceptorBeans(Config config){
+		ClassScaner sc = new ClassScaner(config.getClass().getClassLoader());
+		
 		String param = config.getInitParameter("actionPackages");
 		
 		if(param != null && !param.equals("")){
 			Set<String> componentNames = new HashSet<String>();
 			for(String pkg : param.split(";")){
-				componentNames.addAll(ClassScaner.getClassnameFromPackage(pkg.trim(), true));
+				componentNames.addAll(sc.getClassnameFromPackage(pkg.trim(), true));
 			}
 			
 			Class<?> clazz;
@@ -64,13 +66,14 @@ class ComponentScaner {
 	 */
 	Set<Object> getActionBeans(Config config){
 		String param = config.getInitParameter("actionPackages");
+		ClassScaner sc = new ClassScaner(config.getClass().getClassLoader());
 		
 		if(param != null && !param.equals("")){
 			Set<Class<?>> actionClasses = new HashSet<Class<?>>();
 			String[] packages = param.split(";");
 			Set<String> componentNames = new HashSet<String>();
 			for(String pkg : packages){
-				componentNames.addAll(ClassScaner.getClassnameFromPackage(pkg.trim(), true));
+				componentNames.addAll(sc.getClassnameFromPackage(pkg.trim(), true));
 			}
 			
 			Class<?> clazz;

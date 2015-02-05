@@ -12,16 +12,24 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public final class ClassScaner {
+	private ClassLoader loader;
+	
+	public ClassScaner(){
+		loader = Thread.currentThread().getContextClassLoader();
+	}
+	
+	public ClassScaner(ClassLoader loader){
+		this.loader = loader;
+	}
+	
 	/**
 	 * 获取某包下所有类
 	 * @param packageName 包名
 	 * @param isRecursion 是否遍历子包
 	 * @return 类的完整名称
 	 */
-	public static Set<String> getClassnameFromPackage(String packageName, boolean isRecursion) {
+	public Set<String> getClassnameFromPackage(String packageName, boolean isRecursion) {
 		Set<String> classNames = null;
-		ClassLoader loader = Thread.currentThread().getContextClassLoader();
-
 		URL url = loader.getResource(packageName.replace(".", "/"));
 		if (url != null) {
 			String protocol = url.getProtocol();
@@ -54,7 +62,7 @@ public final class ClassScaner {
 	 * @param isRecursion 是否遍历子包
 	 * @return 类的完整名称
 	 */
-	private static Set<String> getClassNameFromDir(String filePath, String packageName, boolean isRecursion) {
+	private Set<String> getClassNameFromDir(String filePath, String packageName, boolean isRecursion) {
 		Set<String> className = new HashSet<String>();
 		File file = new File(filePath);
 		File[] files = file.listFiles();
@@ -81,7 +89,7 @@ public final class ClassScaner {
 	 * @param isRecursion
 	 * @return
 	 */
-	private static Set<String> getClassNameFromJar(Enumeration<JarEntry> jarEntries, String packageName, boolean isRecursion){
+	private Set<String> getClassNameFromJar(Enumeration<JarEntry> jarEntries, String packageName, boolean isRecursion){
 		Set<String> classNames = new HashSet<String>();
 		
 		while (jarEntries.hasMoreElements()) {
@@ -113,7 +121,7 @@ public final class ClassScaner {
 	 * @param isRecursion 是否遍历子包
 	 * @return 类的完整名称
 	 */
-	private static Set<String> getClassNameFromJars(URL[] urls, String packageName, boolean isRecursion) {
+	private Set<String> getClassNameFromJars(URL[] urls, String packageName, boolean isRecursion) {
 		Set<String> classNames = new HashSet<String>();
 		
 		for (int i = 0; i < urls.length; i++) {

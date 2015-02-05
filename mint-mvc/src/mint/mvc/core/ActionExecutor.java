@@ -232,23 +232,24 @@ class ActionExecutor {
 
 		/* 从请求参数中初始化action方法参数(argument) */
 		Map<String, String[]> paramMap = req.getParameterMap();
-		Object instance;
+		Object arguInstance;
 		Map<String, ParameterInjector> injectors = actionConfig.injectors;
 		ParameterInjector injector;
 		
 		try {
 			for (String paramName : paramMap.keySet()) {
 				injector = injectors.get(paramName);
+				
 				if (injector != null) {
 					if (injector.needInject) {
-						instance = arguments[injector.argIndex];
-						if (instance == null) {
+						arguInstance = arguments[injector.argIndex];
+						if (arguInstance == null) {
 							/* instantiate a instance the first time you use */
-							instance = injector.argType.newInstance();
-							arguments[injector.argIndex] = instance;
+							arguInstance = injector.argType.newInstance();
+							arguments[injector.argIndex] = arguInstance;
 						}
-	
-						instance = arguments[injector.argIndex] = injector.inject(instance, paramMap.get(paramName)[0], paramName);
+						
+						arguments[injector.argIndex] = injector.inject(arguInstance, paramMap.get(paramName)[0], paramName);
 					} else {
 						if (injector.isArray) {
 							/*
@@ -274,7 +275,7 @@ class ActionExecutor {
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
 			e.printStackTrace();
-		}
+		} 
 		
 		/*
 		 * 从request.getAttributeNames()初始化参数

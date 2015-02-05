@@ -18,6 +18,7 @@ import mint.mvc.renderer.FileRenderer;
  */
 class StaticFileHandler {
     private final ServletContext servletContext;
+    //private final String webRoot;
 
     /**
      * @param config
@@ -25,6 +26,7 @@ class StaticFileHandler {
      */
     StaticFileHandler(ServletConfig config) throws ServletException {
         this.servletContext = config.getServletContext();
+        //this.webRoot = servletContext.getRealPath("/");
     }
 
     /**
