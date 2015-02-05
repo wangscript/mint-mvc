@@ -45,8 +45,8 @@ public abstract class Interceptor {
 			matcher.reset(url);
 			//if(matcher.matches()){
 				url = url.replace("**", holder);
-				url = url.replace("*", "[^/]*");
-				url = url.replace(holder, "([^/]+)(/[^/]+)*|[^/]*");
+				url = url.replace("*", "([^/]*)");
+				url = url.replace(holder, "(([^/]+)(/[^/]+)*|[^/]*)");
 				icptPattern.append("|").append(url);
 			//} else {
 				//logger.warning("发现非法拦截器url参数："+url);
