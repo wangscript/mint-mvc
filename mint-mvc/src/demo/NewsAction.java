@@ -5,9 +5,8 @@ import mint.mvc.core.annotation.Mapping;
 
 @BaseMapping("/news")
 public class NewsAction {
-	@Mapping(urls={"/{id}"}, method="get")
+	@Mapping(urls={"/me/you/her","/{id}"}, method="get")
 	public String index(Integer id, String name){
-		System.out.println(name);
 		return "get";
 	}
 	

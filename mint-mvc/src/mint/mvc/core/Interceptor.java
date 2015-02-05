@@ -26,30 +26,31 @@ public abstract class Interceptor {
 	 * @return
 	 */
 	boolean initMatcher(){
-		InterceptorMapping im = this.getClass().getAnnotation(InterceptorMapping.class);
+		InterceptorMapping intemap = this.getClass().getAnnotation(InterceptorMapping.class);
 		
-		if(im == null){
+		if(intemap == null){
 			logger.warning("拦截器未正确配置InterceptorMapping");
 			return false;
 		}
 		
-		String[] urlPattern = im.urls();
+		String[] urlPattern = intemap.urls();
 		matcher = Pattern.compile(checkReg).matcher("");
 		
 		StringBuilder icptPattern = new StringBuilder();
+		String holder = "%%%%%%%%%%%%%%%%%%%%%%";
+		
 		for(String url : urlPattern){
 			
 			/*检查url结构是否正确*/
 			matcher.reset(url);
-			if(matcher.matches()){
-				if(url.endsWith("*")){
-					icptPattern.append("|").append(matcher.group(1)).append("[/][\\S]+");
-				} else {
-					icptPattern.append("|").append(matcher.group(1)).append("[/]?");
-				}
-			} else {
-				logger.warning("发现非法拦截器url参数："+url);
-			}
+			//if(matcher.matches()){
+				url = url.replace("**", holder);
+				url = url.replace("*", "[^/]*");
+				url = url.replace(holder, "([^/]+)(/[^/]+)*|[^/]*");
+				icptPattern.append("|").append(url);
+			//} else {
+				//logger.warning("发现非法拦截器url参数："+url);
+			//}
 		}
 		
 		if(icptPattern.length()>1){

@@ -31,7 +31,7 @@ class ComponentScaner {
 						for(Class<?> parent = clazz.getSuperclass(); parent != null; parent = parent.getSuperclass()){
 							if(parent.equals(Interceptor.class)){
 								interceptorClasses.add(clazz);
-								logger.info("扫描到拦截器->"+clsName);
+								logger.info("discover a interceptor->"+clsName);
 								break;
 							}
 						}
@@ -51,7 +51,7 @@ class ComponentScaner {
 						interceptors.add(itcep);
 					}
 				} catch (InstantiationException | IllegalAccessException e) {
-					logger.warning("无法初始化拦截器:"+cls.getName());
+					logger.warning("discover a action->"+cls.getName());
 				}
 			}
 			
