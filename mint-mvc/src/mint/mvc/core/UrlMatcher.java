@@ -75,14 +75,17 @@ final class UrlMatcher {
         this.urlArgOrder = new int[len];
         
         for(int i=0, j; i<len; i++){
-        	urlParamName = urlPList.get(i);
-        	j = argNames.indexOf(urlParamName);
         	
-        	/*如果url中的参数名在action方法中找不到，则抛出异常*/
-        	if(j>-1){
-        		urlArgOrder[i] = j;
-        	} else {
-        		//throw new ConfigException("action 方法:" + actMethod.toGenericString() + " 不含有" + uPName + "参数");
+        	if(urlPList!=null){
+        		urlParamName = urlPList.get(i);
+        		j = argNames.indexOf(urlParamName);
+        		
+        		/*如果url中的参数名在action方法中找不到，则抛出异常*/
+        		if(j>-1){
+        			urlArgOrder[i] = j;
+        		} else {
+        			//throw new ConfigException("action 方法:" + actMethod.toGenericString() + " 不含有" + uPName + "参数");
+        		}
         	}
         }
         

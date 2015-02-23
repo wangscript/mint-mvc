@@ -15,7 +15,7 @@ public @interface MultipartConfig {
 	String attributeName();
 	
 	/**
-	 * 针对该 multipart/form-data 请求的最大数量，默认值为 -1，表示没有限制，小于等于零都表示没限制。
+	 * 针对该 multipart/form-data 请求请求体的最大长度，小于等于0，表示没有大小限制。默认是-1。
 	 * @return
 	 */
 	int maxRequestSize() default -1;

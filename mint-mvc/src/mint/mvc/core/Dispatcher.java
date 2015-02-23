@@ -55,7 +55,7 @@ class Dispatcher {
 	 * @throws IOException
 	 */
 	Action dispatch(HttpServletRequest request) throws ServletException, IOException {
-		String path 	= request.getRequestURI();
+		String path = request.getRequestURI();
 		String ctxP = request.getContextPath();
 		
 		if (ctxP.length() > 0) {
@@ -102,7 +102,7 @@ class Dispatcher {
 
 		/* 初始化action */
 		logger.info("\n");
-		logger.info("↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓ start matching url ... ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓");
+		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> start matching url ... <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<");
 		ActionDetector ad = new ActionDetector();
 		ad.awareActionMethodFromBeans(componentScaner.getActionBeans(config));
 		
@@ -119,7 +119,7 @@ class Dispatcher {
 		this.matchersMap.put("PUT", ad.putUrlMap.keySet().toArray(new UrlMatcher[ad.putUrlMap.size()]));
 		this.matchersMap.put("DELETE", ad.deleteUrlMap.keySet().toArray(new UrlMatcher[ad.deleteUrlMap.size()]));
 		
-		logger.info("↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑ end matching url ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑\n");
+		logger.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> end matching url <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<\n");
 	}
 
 	void destroy() {

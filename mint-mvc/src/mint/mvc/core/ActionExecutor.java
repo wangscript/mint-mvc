@@ -108,23 +108,28 @@ class ActionExecutor {
 				
 				if(action.actionConfig.isMultipartAction){
 					MultipartConfig multipartConfig = action.actionConfig.multipartConfig;
-					final Object lock = new Object();
-					boolean uploading = FileUpload.upload(uploadTemp, multipartConfig.attributeName(), multipartConfig.limitSize(), acontext, lock);
-					
-					/*当文件正在上传时，阻塞当前线程，待文件上传完毕时，再唤醒当前线程，达到同步效果。唤醒当前线程的代码在文件上传线程中*/
-					if(uploading){
-						synchronized (lock) {
-							try {
-								lock.wait();
-							} catch (InterruptedException e) {
-								e.printStackTrace();
+					if(multipartConfig.maxRequestSize() <= 0 || (request.getContentLength() < multipartConfig.maxRequestSize())){
+						final Object lock = new Object();
+						boolean uploading = FileUpload.upload(uploadTemp, multipartConfig.attributeName(), multipartConfig.limitSize(), acontext, lock);
+						
+						/*当文件正在上传时，阻塞当前线程，待文件上传完毕时，再唤醒当前线程，达到同步效果。唤醒当前线程的代码在文件上传线程中*/
+						if(uploading){
+							synchronized (lock) {
+								try {
+									lock.wait();
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+							}
+							
+							if(request.getAttribute(multipartConfig.attributeName()) != null){
+								MultipartHttpServletRequest r = new MultipartHttpServletRequest(request, (MultipartParameter[]) request.getAttribute(multipartConfig.attributeName()));
+								request = r;
 							}
 						}
-						
-						if(request.getAttribute(multipartConfig.attributeName()) != null){
-							MultipartHttpServletRequest r = new MultipartHttpServletRequest(request, (MultipartParameter[]) request.getAttribute(multipartConfig.attributeName()));
-							request = r;
-						}
+					} else {
+						logger.warning("request body is too large");
+						acontext.complete();
 					}
 				} else {
 					acontext.complete();
@@ -141,7 +146,6 @@ class ActionExecutor {
 			}
 		}
 	}
-	
 	
 	/**
 	 * @param config

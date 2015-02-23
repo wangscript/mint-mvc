@@ -51,7 +51,7 @@ class ComponentScaner {
 						interceptors.add(itcep);
 					}
 				} catch (InstantiationException | IllegalAccessException e) {
-					logger.warning("discover a action->"+cls.getName());
+					logger.warning("discover a interceptor->"+cls.getName());
 				}
 			}
 			
@@ -82,7 +82,7 @@ class ComponentScaner {
 					clazz = Class.forName(clsName, false, ComponentScaner.class.getClassLoader()); //避免static语句执行所发生的错误
 					if(clazz.getAnnotation(BaseMapping.class) != null){
 						actionClasses.add(clazz);
-						logger.info("扫描到Action->"+clsName);
+						logger.info("discover a action->"+clsName);
 					}
 				} catch (Throwable e) {
 					e.printStackTrace();
@@ -94,7 +94,7 @@ class ComponentScaner {
 				try {
 					actions.add(cls.newInstance());
 				} catch (InstantiationException | IllegalAccessException e) {
-					logger.warning("无法初始化action:"+cls.getName());
+					logger.warning("can't instantiates action->"+cls.getName());
 				}
 			}
 			return actions;

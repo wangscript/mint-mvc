@@ -33,5 +33,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface Mapping {
     String[] urls();
-    String method()  default "";
+    String method()		default "";
+    String protocol()	default "http";
 }
