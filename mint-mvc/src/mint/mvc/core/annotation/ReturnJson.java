@@ -6,28 +6,10 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * Method annotation for mapping URL.<br/>
- * For example:<br/>
- * <pre>
- * public class Blog {
- *     &#064;Mapping("/")
- *     public String index() {
- *         // handle index page...
- *     }
- * 
- *     &#064;Mapping("/blog/$1")
- *     public String show(int id) {
- *         // show blog with id...
- *     }
- * 
- *     &#064;Mapping("/blog/edit/$1")
- *     public void edit(int id) {
- *         // edit blog with id...
- *     }
- * }
- * </pre>
- * 
- * @author Michael Liao (askxuefeng@gmail.com)
+ * @Description: 配置了该注解的action方法回将返回值自动序列化成json返回
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:25:49 
+ *
  */
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)

@@ -14,6 +14,12 @@ import javax.servlet.AsyncContext;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
+/** 
+ * @Description: 处理文件上传细节的工具类
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:32:14 
+ *  
+ */
 final class UploadExecutor implements Runnable{
 	private static Logger logger = Logger.getLogger(UploadExecutor.class.getName());
 	

@@ -4,6 +4,12 @@ import java.io.File;
 
 import javax.servlet.http.Part;
 
+/** 
+ * @Description: 
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:31:59 
+ *  
+ */
 public interface  MultipartParameter extends Part{
 	/**
 	 * 是否文件

@@ -12,9 +12,19 @@ import javax.servlet.http.HttpServletResponse;
 import mint.mvc.renderer.FileRenderer;
 
 /**
- * Handle static file request.
+ * 
+ * 
+ * 
+ */
+
+/**
+ * 
+ * @Description: Handle static file request.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:12:08 
+ *
  */
 class StaticFileHandler {
     private final ServletContext servletContext;

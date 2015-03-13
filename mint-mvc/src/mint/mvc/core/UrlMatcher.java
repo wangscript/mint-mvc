@@ -13,11 +13,14 @@ import mint.mvc.util.GetArgumentName;
 import com.sun.istack.internal.logging.Logger;
 
 /**
- * Match URL by regular expression<br/>
+ * 
+ * @Description: Match URL by regular expression<br/>
  * The maximum number of parameters is 10(from 0 to 10).
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
- * @author LW
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:12:42 
+ *
  */
 final class UrlMatcher {
 	static final String[] 	EMPTY_STRINGS 	= new String[0];

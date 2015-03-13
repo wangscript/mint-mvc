@@ -33,10 +33,13 @@ import com.alibaba.fastjson.JSON;
 import com.sun.istack.internal.logging.Logger;
 
 /**
- * @author LW
- * action的执行者。将请求传递过来的参数经过友好的封装，
+ * @Description: action的执行者。将请求传递过来的参数经过友好的封装，
  * 整理成action方法的参数，然后调用action方法，并且对
  * 方法的返回值做处理后返回
+ *  
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午7:44:15 
+ *
  */
 class ActionExecutor {
 	private final Logger logger = Logger.getLogger(this.getClass());

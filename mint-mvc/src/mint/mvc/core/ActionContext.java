@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
  * Holds all Servlet objects in ThreadLocal.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
+ * @author liangwei
  */
 public final class ActionContext {
 

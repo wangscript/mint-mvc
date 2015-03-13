@@ -10,6 +10,12 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 
+/** 
+ * @Description: 封装多媒体请求参数的类
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:29:10 
+ *  
+ */
 public class DefaultMultipartParameter implements MultipartParameter{
 	static Logger logger = Logger.getLogger(MultipartParameter.class.getName());
 	
@@ -28,7 +34,7 @@ public class DefaultMultipartParameter implements MultipartParameter{
 	public void delete() throws IOException {
 		if(tempFile != null){
 			if(tempFile.delete()){
-				logger.warning("删除临时文件失败");
+				logger.warning("fail to delete temp file");
 			};
 		}
 	}
@@ -80,8 +86,6 @@ public class DefaultMultipartParameter implements MultipartParameter{
 		if(isFile){
 			File file = new File(fileName);
 			if(!file.createNewFile()) return;
-			
-			//TODO
 		}
 	}
 

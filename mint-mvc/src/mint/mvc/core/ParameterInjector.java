@@ -13,8 +13,10 @@ import mint.mvc.converter.ConverterFactory;
 import com.alibaba.fastjson.JSON;
 
 /**
- * 参数注射器，负责把前台参数注射入对应的对象内部
- * @author LW
+ * @Description: 参数注射器，负责把前台参数注射入对应的对象内部
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:09:34 
+ *
  */
 class ParameterInjector {
 	/**

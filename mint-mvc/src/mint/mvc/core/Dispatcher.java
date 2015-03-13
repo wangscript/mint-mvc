@@ -14,12 +14,15 @@ import mint.mvc.core.Config;
 
 import com.sun.istack.internal.logging.Logger;
 
+
 /**
- * Dispatcher handles ALL requests from clients, and dispatches to appropriate
+ * @Description: Dispatcher handles ALL requests from clients, and dispatches to appropriate
  * handler to handle each request.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
- * @author LW
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:07:16 
+ *
  */
 class Dispatcher {
 	private final Logger logger = Logger.getLogger(this.getClass());

@@ -5,9 +5,12 @@ import mint.mvc.core.Config;
 import com.sun.istack.internal.logging.Logger;
 
 /**
- * TemplateFactory which uses JSP.
+ * @Description: TemplateFactory which uses JSP.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:17:18 
+ *
  */
 public class JspTemplateFactory extends TemplateFactory {
 	private final Logger logger = Logger.getLogger(this.getClass());

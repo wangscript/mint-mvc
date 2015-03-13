@@ -8,12 +8,22 @@ import com.sun.istack.internal.logging.Logger;
 import mint.mvc.core.annotation.InterceptorMapping;
 
 /**
- * Intercept action's execution like servlet Filter, but interceptors are 
+ * 
+ * 
+ * 
+ */
+
+/**
+ * 
+ * @Description: Intercept action's execution like servlet Filter, but interceptors are 
  * configured and managed by IoC container. Another difference from Filter 
  * is that Interceptor is executed around Action's execution, but before 
  * rendering view.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:08:52 
+ *
  */
 public abstract class Interceptor {
 	private final static String checkReg = "^((/\\w+)*)[/]?[\\*]?";

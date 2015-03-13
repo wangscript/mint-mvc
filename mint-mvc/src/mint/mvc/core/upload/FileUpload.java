@@ -6,9 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import com.sun.istack.internal.logging.Logger;
 
-/**
- * @author LW
- * 文件上传的工具类
+/** 
+ * @Description: 文件上传的工具类
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:30:43 
+ *  
  */
 public class FileUpload {
 	private static Logger logger = Logger.getLogger(FileUpload.class);

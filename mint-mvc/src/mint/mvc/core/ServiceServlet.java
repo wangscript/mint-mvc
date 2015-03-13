@@ -15,10 +15,20 @@ import javax.servlet.http.HttpServletResponse;
 import com.sun.istack.internal.logging.Logger;
 
 /**
- * DispatcherServlet must be mapped to root URL "/". It handles ALL requests 
+ * 
+ * 
+ * 
+ */
+
+/**
+ * 
+ * @Description: DispatcherServlet must be mapped to root URL "/". It handles ALL requests 
  * from clients, and dispatches to appropriate handler to handle each request.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年3月13日 下午9:10:43 
+ *
  */
 @WebServlet(asyncSupported = true) 
 public class ServiceServlet extends HttpServlet {
