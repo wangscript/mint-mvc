@@ -12,7 +12,7 @@ import mint.mvc.core.annotation.BaseMapping;
 import mint.mvc.core.annotation.Mapping;
 
 /**
- * @Description: action 探测器。用来从指定实体中找到多有的action实体，并找到所有的action 方法（带Mapping）的方法
+ * action 探测器。用来从指定实体中找到多有的action实体，并找到所有的action 方法（带Mapping）的方法
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午7:43:43 
  */

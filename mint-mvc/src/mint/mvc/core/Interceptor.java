@@ -15,7 +15,7 @@ import mint.mvc.core.annotation.InterceptorMapping;
 
 /**
  * 
- * @Description: Intercept action's execution like servlet Filter, but interceptors are 
+ * Intercept action's execution like servlet Filter, but interceptors are 
  * configured and managed by IoC container. Another difference from Filter 
  * is that Interceptor is executed around Action's execution, but before 
  * rendering view.

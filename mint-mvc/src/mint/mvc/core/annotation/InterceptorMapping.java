@@ -6,7 +6,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * @Description:Method annotation for mapping URL.<br/>
+ * Method annotation for mapping URL.<br/>
  * For example:<br/>
  * <pre>
  *	@InterceptorOrder(0)

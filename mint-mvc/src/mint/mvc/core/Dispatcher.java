@@ -16,7 +16,7 @@ import com.sun.istack.internal.logging.Logger;
 
 
 /**
- * @Description: Dispatcher handles ALL requests from clients, and dispatches to appropriate
+ * Dispatcher handles ALL requests from clients, and dispatches to appropriate
  * handler to handle each request.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)

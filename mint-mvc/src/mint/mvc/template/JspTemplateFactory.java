@@ -5,7 +5,7 @@ import mint.mvc.core.Config;
 import com.sun.istack.internal.logging.Logger;
 
 /**
- * @Description: TemplateFactory which uses JSP.
+ * TemplateFactory which uses JSP.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
  * @author LiangWei(895925636@qq.com)

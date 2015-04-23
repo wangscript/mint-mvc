@@ -15,7 +15,7 @@ import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 
 /** 
- * @Description: 处理文件上传细节的工具类
+ * 处理文件上传细节的工具类
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午9:32:14 
  *  
@@ -104,7 +104,7 @@ final class UploadExecutor implements Runnable{
 			
 			//第一行必须是分隔符
 			if(!line.startsWith(boundary)){
-				logger.warning("文件上传数据格式不正确");
+				logger.warning("Multimedia requests cannot be resolved");
 				return;
 			}
 			
@@ -115,7 +115,7 @@ final class UploadExecutor implements Runnable{
 			
 			while(!end){
 				if(!end && readLen < 0){
-					logger.warning("非法请求：不是标准的文件上传请求");
+					logger.warning("Multimedia requests cannot be resolved");
 					return;
 				}
 				
@@ -130,7 +130,7 @@ final class UploadExecutor implements Runnable{
 					Map<String, String> info = parsePartInfo(partInfo, null);
 					
 					if(info.get("name") == null || "".equals(info.get("name"))){
-						logger.warning("非法请求：包含无名参数");
+						logger.warning("Multimedia requests cannot be resolved");
 						break;
 					}
 					
@@ -156,7 +156,7 @@ final class UploadExecutor implements Runnable{
 							mimeType = partInfo.split(":")[1].trim();
 							
 							if("".equals(mimeType)){
-								logger.warning("非法请求：文件参数描述信息不全");
+								logger.warning("Multimedia requests cannot be resolved");
 								break;
 							}
 							
@@ -167,7 +167,7 @@ final class UploadExecutor implements Runnable{
 							fileOut = new FileOutputStream(tempFile);
 							currentPart.tempFile = tempFile;
 						} else {
-							logger.warning("非法请求：文件参数描述信息不全");
+							logger.warning("Multimedia requests cannot be resolved");
 							break;
 						}
 					} else {
@@ -220,7 +220,7 @@ final class UploadExecutor implements Runnable{
 							fileOut.write(readBuf, 0, readLen);
 							fileOut.flush();
 						} else {
-							logger.warning("上传文件超过期望长度");
+							logger.warning("files too large");
 							end = true;
 							break;
 						}
@@ -267,7 +267,7 @@ final class UploadExecutor implements Runnable{
 						if(partSize <= limitSize){
 							paramValue.append(new String(readBuf, 0, readLen, "utf8"));
 						} else {
-							logger.warning("请求参数超过期望长度");
+							logger.warning("too long");
 							end = true;
 							break;
 						}
@@ -276,7 +276,7 @@ final class UploadExecutor implements Runnable{
 			}
 			inputStream.close();
 		} catch (IOException e) {
-			logger.warning("文件上传失败");
+			logger.warning("fail to receive file");
 		} finally{
 			try {
 				if(fileOut != null) fileOut.close();
@@ -336,7 +336,7 @@ final class UploadExecutor implements Runnable{
 			return tempFile;
 		} catch (IOException e) {
 			e.printStackTrace();
-			throw new IOException("无法创建临时文件");
+			throw new IOException("can not careat temp file");
 		}
 	}
 }

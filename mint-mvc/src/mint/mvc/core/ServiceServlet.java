@@ -22,7 +22,7 @@ import com.sun.istack.internal.logging.Logger;
 
 /**
  * 
- * @Description: DispatcherServlet must be mapped to root URL "/". It handles ALL requests 
+ * DispatcherServlet must be mapped to root URL "/". It handles ALL requests 
  * from clients, and dispatches to appropriate handler to handle each request.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)

@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 
- * @Description: Used to sort interceptors.
+ * Used to sort interceptors.
  * @author LiangWei(895925636@qq.com)
  * @author Michael Liao (askxuefeng@gmail.com)
  * @date 2015年3月13日 下午9:24:03 

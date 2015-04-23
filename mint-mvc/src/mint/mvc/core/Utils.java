@@ -5,7 +5,7 @@ import mint.mvc.template.TemplateFactory;
 import com.sun.istack.internal.logging.Logger;
 
 /**
- * @Description: Utils for create ContainerFactory, TemplateFactory, etc.
+ * Utils for create ContainerFactory, TemplateFactory, etc.
  * @author Michael Liao (askxuefeng@gmail.com)
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午9:13:20 

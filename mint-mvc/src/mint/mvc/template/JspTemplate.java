@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Description: Template using JSP which forward to specific JSP page.
+ * Template using JSP which forward to specific JSP page.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
  * @author LiangWei(895925636@qq.com)

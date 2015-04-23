@@ -33,7 +33,7 @@ import com.alibaba.fastjson.JSON;
 import com.sun.istack.internal.logging.Logger;
 
 /**
- * @Description: action的执行者。将请求传递过来的参数经过友好的封装，
+ * action的执行者。将请求传递过来的参数经过友好的封装，
  * 整理成action方法的参数，然后调用action方法，并且对
  * 方法的返回值做处理后返回
  *  
@@ -45,7 +45,7 @@ class ActionExecutor {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	private ServletContext servletContext;
-	private ExceptionHandler exceptionHandler = new DefaultExceptionHandler();
+	private ExceptionListener exceptionHandler;
 
 	/**
 	 * 拦截器
@@ -63,6 +63,19 @@ class ActionExecutor {
 		logger.info("Init Dispatcher...");
 		this.servletContext = config.getServletContext();
 		uploadTemp = config.getInitParameter("uploadTemp");
+		
+		String exHandler = config.getInitParameter("ExceptionHandler");
+		if(exHandler!=null && !exHandler.equals("")){
+			try {
+				exceptionHandler = (ExceptionListener) Class.forName(exHandler).newInstance();
+			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
+				logger.warning("can not init custom ExceptionHandler");
+				e.printStackTrace();
+			}
+		} else {
+			exceptionHandler = new DefaultExceptionListener();
+		}
+		
 		try {
 			initAll(config);
 		} catch (Exception e) {
@@ -121,7 +134,7 @@ class ActionExecutor {
 								try {
 									lock.wait();
 								} catch (InterruptedException e) {
-									e.printStackTrace();
+									handleException(request, response, e);
 								}
 							}
 							

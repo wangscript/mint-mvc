@@ -10,7 +10,7 @@ import mint.mvc.util.ClassScaner;
 
 /**
  * 
-* @Description: 组件的扫描器。根据web.xml配置的"actionPackages"启动参数，自动扫描出action和interceptor
+* 组件的扫描器。根据web.xml配置的"actionPackages"启动参数，自动扫描出action和interceptor
 * @author LiangWei 
 * @date 2015年3月13日 下午7:37:45 
 *

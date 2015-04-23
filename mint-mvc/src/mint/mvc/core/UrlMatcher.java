@@ -14,7 +14,7 @@ import com.sun.istack.internal.logging.Logger;
 
 /**
  * 
- * @Description: Match URL by regular expression<br/>
+ * Match URL by regular expression<br/>
  * The maximum number of parameters is 10(from 0 to 10).
  * 
  * @author Michael Liao (askxuefeng@gmail.com)

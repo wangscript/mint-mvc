@@ -12,7 +12,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 /** 
- * @Description: 扫描类
+ * 扫描类
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午9:19:14 
  */

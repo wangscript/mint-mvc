@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Description: Render http response as text. This is usually used to render HTML, JavaScript, 
+ * Render http response as text. This is usually used to render HTML, JavaScript, 
  * CSS or any text type.
  * @author Michael Liao (askxuefeng@gmail.com)
  * @author LiangWei(895925636@qq.com)

@@ -7,7 +7,7 @@ import java.lang.annotation.Target;
 
 /**
  * 
- * @Description: 多媒体请求配置
+ * 多媒体请求配置
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午9:25:13 
  *

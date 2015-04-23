@@ -6,7 +6,7 @@ import com.sun.istack.internal.logging.Logger;
 
 /**
  * 
- * @Description: TemplateFactory which holds the singleton instance of TemplateFactory.
+ * TemplateFactory which holds the singleton instance of TemplateFactory.
  * @author Michael Liao (askxuefeng@gmail.com)
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午9:18:32 

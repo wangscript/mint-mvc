@@ -19,7 +19,7 @@ import mint.mvc.renderer.FileRenderer;
 
 /**
  * 
- * @Description: Handle static file request.
+ * Handle static file request.
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
  * @author LiangWei(895925636@qq.com)

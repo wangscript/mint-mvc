@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * @Description: Render http response as binary stream. This is usually used to render PDF, 
+ * Render http response as binary stream. This is usually used to render PDF, 
  * image, or any binary type.
  * @author Michael Liao (askxuefeng@gmail.com)
  * @author LiangWei(895925636@qq.com)

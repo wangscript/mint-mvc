@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import mint.mvc.template.TemplateFactory;
 
 /**
- * @Description:Render output using template engine.
+ * Render output using template engine.
  * @author Michael Liao (askxuefeng@gmail.com)
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午9:15:02 

@@ -8,10 +8,10 @@ import javax.servlet.http.HttpServletResponse;
  * 
  * @author Michael Liao (askxuefeng@gmail.com)
  */
-interface ExceptionHandler {
+public interface ExceptionListener {
 
     /**
-     * Handle exception when exception occurs.
+     * Handle exception when exception occurs in actions or interceptor.
      * 
      * @param request The HttpServletRequest object.
      * @param response The HttpServletResponse object.

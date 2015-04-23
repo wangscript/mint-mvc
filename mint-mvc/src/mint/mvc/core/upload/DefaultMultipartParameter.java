@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 
 
 /** 
- * @Description: 封装多媒体请求参数的类
+ * 封装多媒体请求参数的类
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午9:29:10 
  *  

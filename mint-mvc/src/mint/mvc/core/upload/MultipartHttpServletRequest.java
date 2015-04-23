@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequestWrapper;
 import javax.servlet.http.Part;
 
 /** 
- * @Description: 封装多媒体请求
+ * 封装多媒体请求
  * @author LiangWei(895925636@qq.com)
  * @date 2015年3月13日 下午9:30:58 
  *  
