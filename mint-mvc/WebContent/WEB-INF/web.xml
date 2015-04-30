@@ -16,6 +16,10 @@
 			<param-name>uploadTemp</param-name>
 			<param-value>/static/</param-value>
 		</init-param>
+		<init-param>
+			<param-name>exceptionListener</param-name>
+			<param-value>demo.CustomerExceptionListener</param-value>
+		</init-param>
 		<load-on-startup>0</load-on-startup>
 		<async-supported>true</async-supported>
 	</servlet>

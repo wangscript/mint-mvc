@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	*{
+		font-family: "微软雅黑"
+	}
+	fieldset{
+		border:1px solid #ccc;
+	}
+	
+	input{
+		margin-bottom:3px;
+	}
+</style>
+
+<fieldset>
+	<legend>返回基础类型和普通类</legend>
+	<a href="test/string" target="demo_iframe">test/string</a>
+</fieldset>
+
+<fieldset>
+	<legend>返回模板渲染器</legend>
+	<a href="test/user" target="demo_iframe">test/user</a>
+</fieldset>
+
+<fieldset>
+	<legend>返回JSON</legend>
+	<a href="test/json" target="demo_iframe">test/json</a>
+</fieldset>
+
+<fieldset>
+	<legend>用表单参数初始化action参数（基础类型）</legend>
+	<form action="test/book" target="demo_iframe" method="post">
+		书名：<input name="bookName" value="科学是美丽的"/><br/>
+		书号：<input name="bookId" value="1023"/>
+		<button>提交</button>
+	</form>
+</fieldset>

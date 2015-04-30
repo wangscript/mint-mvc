@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style>
+	*{
+		font-family: "微软雅黑"
+	}
+	body{
+		width:1230px;
+	}
+	.left,.right{
+		float:left;
+		border:2px solid #ccc;
+		padding:5px;
+	}
+	
+	.left fieldset{
+		border:1px solid #ccc;
+	}
+	
+	.right{
+		margin-left:4px;
+	}
+	
+	.right > div{
+		display:inline-block;
+	}
+	
+	input{
+		margin-bottom:3px;
+	}
+</style>
+
+<div class="catalog left">
+	<h5>mint mvc教程与例子目录</h5>
+	<h6><a href="first.html" target="sub_demo">mint mvc第一个应用</a></h6>
+	<h6><a href="argument.html" target="sub_demo">mint mvc的参数</a></h6>
+	<h6><a href="returntype.html" target="sub_demo">mint mvc的返回值</a></h6>
+	<h6><a href="interceptor.html" target="sub_demo">mint mvc的拦截器</a></h6>
+	<h6><a href="upload.html" target="sub_demo">mint mvc的文件上传功能</a></h6>
+</div>
+<div class="right">
+	<div>
+		<span>例子</span><br/>
+		<iframe name="sub_demo" width="500" height="400" style="border:1px solid #ccc;"></iframe>
+	</div>
+	<div>
+		<span>输出</span><br/>
+		<iframe name="demo_iframe" width="500" height="400" style="border:1px solid #ccc;"></iframe>
+	</div>
+</div>

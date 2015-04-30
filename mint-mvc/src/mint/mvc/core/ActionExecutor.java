@@ -45,7 +45,7 @@ class ActionExecutor {
 	private final Logger logger = Logger.getLogger(this.getClass());
 	
 	private ServletContext servletContext;
-	private ExceptionListener exceptionHandler;
+	private ExceptionListener exceptionListener;
 
 	/**
 	 * 拦截器
@@ -64,16 +64,16 @@ class ActionExecutor {
 		this.servletContext = config.getServletContext();
 		uploadTemp = config.getInitParameter("uploadTemp");
 		
-		String exHandler = config.getInitParameter("ExceptionHandler");
+		String exHandler = config.getInitParameter("exceptionListener");
 		if(exHandler!=null && !exHandler.equals("")){
 			try {
-				exceptionHandler = (ExceptionListener) Class.forName(exHandler).newInstance();
+				exceptionListener = (ExceptionListener) Class.forName(exHandler).newInstance();
 			} catch (InstantiationException | IllegalAccessException | ClassNotFoundException e) {
-				logger.warning("can not init custom ExceptionHandler");
+				logger.warning("can not init custom exceptionListener");
 				e.printStackTrace();
 			}
 		} else {
-			exceptionHandler = new DefaultExceptionListener();
+			exceptionListener = new DefaultExceptionListener();
 		}
 		
 		try {
@@ -318,7 +318,7 @@ class ActionExecutor {
 			}
 		}
 		
-		/* 初始化内置参数 */
+		/* 初始化内置参数（request, response, secction, cookies） */
 		if (actionConfig.builtInArguments != null) {
 			for (BilidInArgumentInfo info : actionConfig.builtInArguments) {
 				switch (info.typeCode) {
@@ -385,7 +385,7 @@ class ActionExecutor {
 	
 	private void handleException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws ServletException, IOException {
 		try {
-			exceptionHandler.handle(request, response, ex);
+			exceptionListener.handle(request, response, ex);
 		} catch (ServletException e) {
 			throw e;
 		} catch (IOException e) {

@@ -1,21 +1,27 @@
-package demo;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+package demo.action;
 
 import mint.mvc.core.annotation.BaseMapping;
 import mint.mvc.core.annotation.Mapping;
-import mint.mvc.renderer.TemplateRenderer;
 
 @BaseMapping("/news")
 public class NewsAction {
+	
+	
+	/**
+	 * id的正则限制了只能匹配数字。":"后面是正则表达式，规定可接收的字符串
+	 * @param id
+	 * @param name
+	 * @return
+	 */
 	@Mapping(urls={"/me/you/her","/{id:\\\\d+}"}, method="get")
 	public String index(Integer id, String name){
 		return "get";
 	}
 	
+	/**
+	 * @param id
+	 * @return
+	 */
 	@Mapping(urls="/{id}", method="post")
 	public String post(Long id){
 		return "post";
@@ -29,20 +35,5 @@ public class NewsAction {
 	@Mapping(urls="/{id}", method="delete")
 	public String delete(Long id){
 		return "delete";
-	}
-	
-	@Mapping(urls="/users", method="get")
-	public TemplateRenderer list(){
-		List<User> users = new ArrayList<User>();
-		for(int i=0; i<5; i++){
-			User user = new User();
-			user.setId(i);
-			user.setName("name"+1);
-		}
-		
-		Map<String, Object> params = new HashMap<String, Object>();
-		params.put("Users", users);
-		
-		return new TemplateRenderer("/users.jsp", params);
 	}
 }
