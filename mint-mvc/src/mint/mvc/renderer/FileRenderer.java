@@ -21,6 +21,9 @@ import javax.servlet.http.HttpServletResponse;
 public class FileRenderer extends Renderer {
 
     private File file;
+    private String cacheControl = null;
+    private String connection = null;
+    private boolean lastModifiedCheck = true;
     
     public FileRenderer() {
     	
@@ -42,14 +45,6 @@ public class FileRenderer extends Renderer {
         this.file = new File(file);
     }
 
-    public File getFile() {
-        return file;
-    }
-
-    public void setFile(File file) {
-        this.file = file;
-    }
-
     @Override
     public void render(ServletContext context, HttpServletRequest request, HttpServletResponse response) throws Exception {
         if (file==null || !file.exists() || !file.isFile() || file.length()>Integer.MAX_VALUE) {
@@ -57,21 +52,27 @@ public class FileRenderer extends Renderer {
             return;
         }
         
-        long ifModifiedSince = request.getDateHeader("If-Modified-Since");
-        long lastModified = file.lastModified();
+        if(lastModifiedCheck){
+        	long ifModifiedSince = request.getDateHeader("If-Modified-Since");
+        	long lastModified = file.lastModified();
+        	
+        	if (ifModifiedSince!=(-1) && ifModifiedSince>=lastModified) { 
+        		response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
+        		return; 
+        	} 
+        	/*lastModified 精确到毫秒，但是ifModifiedSince只精确到秒*/
+        	lastModified = lastModified+1000;
+        	response.setDateHeader("Last-Modified", lastModified);
+        }
 
-        if (ifModifiedSince!=(-1) && ifModifiedSince>=lastModified) { 
-            response.setStatus(HttpServletResponse.SC_NOT_MODIFIED);
-            return; 
-        } 
-        
         /*静态文件缓存*/
-        response.setHeader("Accept-Ranges", "bytes");
-        response.setHeader("Connection", "keep-alive");
-        response.setHeader("Cache-Control", "max-age=86400,must-revalidate");
-        /*lastModified 精确到毫秒，但是ifModifiedSince只精确到秒*/
-        lastModified = lastModified+1000;
-        response.setDateHeader("Last-Modified", lastModified);
+        if(cacheControl != null){
+        	response.setHeader("Cache-Control", cacheControl);
+        }
+        
+        if(connection != null){
+        	response.setHeader("Connection", connection);
+        }
         
         String mime = contentType;
         if (mime==null) {
@@ -102,4 +103,57 @@ public class FileRenderer extends Renderer {
             }
         }
     }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+	/**
+	 * @return
+	 */
+	public String getCacheControl() {
+		return cacheControl;
+	}
+
+	/**
+	 * Cache option, accepted value:
+	 * "max-age=[secs]", "no-cache", "private", "must-revalidate" ...
+	 * 
+	 * @param cacheControl
+	 */
+	public void setCacheControl(String cacheControl) {
+		this.cacheControl = cacheControl;
+	}
+
+	public String getConnection() {
+		return connection;
+	}
+
+	public void setConnection(String connection) {
+		this.connection = connection;
+	}
+
+	/**
+	 * request server judge whether the document is modified
+	 * default to true
+	 * 
+	 * @return
+	 */
+	public boolean isLastModifiedCheck() {
+		return lastModifiedCheck;
+	}
+
+	/**
+	 * request server judge whether the document is modified
+	 * default to true
+	 * 
+	 * @param lastModifiedCheck
+	 */
+	public void setLastModifiedCheck(boolean lastModifiedCheck) {
+		this.lastModifiedCheck = lastModifiedCheck;
+	}
 }

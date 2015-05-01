@@ -78,6 +78,8 @@ class StaticFileHandler {
         
         FileRenderer fr = new FileRenderer(servletContext.getRealPath(url));
         
+        response.setHeader("Connection", "keep-alive");
+        
         try {
 			fr.render(servletContext, request, response);
 		} catch (Exception e) {
