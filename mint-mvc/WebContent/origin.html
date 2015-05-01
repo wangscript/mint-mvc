@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<meta charset="UTF-8">
+<fieldset style="float: left;">
+	<legend>简单数组参数名</legend>
+	<form action="blog/originUrl" method="post">
+		<input name="urls" value="http://stackoverflow.com/" /><br />
+		<input name="urls" value="http://oschina.net/" /><br />
+		<input name="urls" value="http://www.v2ex.com/" /><br />
+		<button type="submit">提交</button>
+	</form>
+</fieldset>
+
+<fieldset style="float: left;">
+	<legend>带有"[]"的数组参数名</legend>
+	<form action="blog/originUrl" method="post">
+		<input name="urls[]" value="http://stackoverflow.com/" /><br />
+		<input name="urls[]" value="http://oschina.net/" /><br />
+		<input name="urls[]" value="http://www.v2ex.com/" /><br />
+		<button type="submit">提交</button>
+	</form>
+</fieldset>
