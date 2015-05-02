@@ -1,33 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class-diagram version="1.1.6" icons="true" always-add-relationships="false" generalizations="true" realizations="true" 
   associations="true" dependencies="false" nesting-relationships="true">  
-  <class id="1" language="java" name="mint.mvc.core.upload.DefaultMultipartParameter" project="mint-mvc" 
-    file="/mint-mvc/src/mint/mvc/core/upload/DefaultMultipartParameter.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="187" y="275"/>    
+  <class id="1" language="java" name="mint.mvc.renderer.FileRenderer" project="mint-mvc" 
+    file="/mint-mvc/src/mint/mvc/renderer/FileRenderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="351" width="299" x="185" y="173"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
+      visibility="true">      
+      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
+      <operations public="true" package="true" protected="true" private="true" static="true"/>    
+    </display>  
+  </class>  
+  <class id="2" language="java" name="mint.mvc.renderer.Renderer" project="mint-mvc" 
+    file="/mint-mvc/src/mint/mvc/renderer/Renderer.java" binary="false" corner="BOTTOM_RIGHT">    
+    <position height="-1" width="-1" x="693" y="345"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
       visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
     </display>  
   </class>  
-  <class id="2" language="java" name="mint.mvc.core.upload.FileUpload" project="mint-mvc" 
-    file="/mint-mvc/src/mint/mvc/core/upload/FileUpload.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="327" y="438"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
-  <class id="3" language="java" name="mint.mvc.core.upload.UploadExecutor" project="mint-mvc" 
-    file="/mint-mvc/src/mint/mvc/core/upload/UploadExecutor.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="261" width="298" x="624" y="37"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" accessors="true" 
-      visibility="true">      
-      <attributes public="true" package="true" protected="true" private="true" static="true"/>      
-      <operations public="true" package="true" protected="true" private="true" static="true"/>    
-    </display>  
-  </class>  
+  <generalization id="3">    
+    <end type="SOURCE" refId="1"/>    
+    <end type="TARGET" refId="2"/>  
+  </generalization>  
   <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
     accessors="true" visibility="true">    
     <attributes public="true" package="true" protected="true" private="true" static="true"/>    

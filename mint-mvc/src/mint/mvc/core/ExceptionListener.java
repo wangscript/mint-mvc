@@ -3,10 +3,11 @@ package mint.mvc.core;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
+/** 
  * Central handler for handling all exceptions.
- * 
- * @author Michael Liao (askxuefeng@gmail.com)
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年5月2日 下午2:11:49 
+ *  
  */
 public interface ExceptionListener {
 

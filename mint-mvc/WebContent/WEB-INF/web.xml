@@ -8,21 +8,43 @@
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>mint.mvc.core.ServiceServlet</servlet-class>
+		
+		<!-- 静态文件缓存设置，非必要。字符串类型，默认为"max-age=600"。 -->
+		<init-param>
+			<param-name>staticFileCacheControl</param-name>
+			<param-value>max-age=1800</param-value>
+		</init-param>
+		
+		<!-- 处理静态文件时是否想服务器询问文件的修改时间，非必要。boolean类型，默认为true。 -->
+		<init-param>
+			<param-name>staticFileLastModifiedCheck</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		
+		<!-- action 和 拦截器 所在的包，必要。多个路径用";"分开，目录会被递归扫描 -->
 		<init-param>
 			<param-name>actionPackages</param-name>
 			<param-value>demo</param-value>
 		</init-param>
+		
+		<!-- 上传文件的临时存放目录，需要上传功能时必要 -->
 		<init-param>
 			<param-name>uploadTemp</param-name>
-			<param-value>/static/</param-value>
+			<param-value>D:/static/</param-value>
 		</init-param>
+		
+		<!-- 自定义异常监听器，非必要。继承mint.mvc.core.ExceptionListener -->
 		<init-param>
 			<param-name>exceptionListener</param-name>
 			<param-value>demo.CustomerExceptionListener</param-value>
 		</init-param>
+		
 		<load-on-startup>0</load-on-startup>
+		
+		<!-- servlet3异步处理请求功能。需要上传功能时必要 -->
 		<async-supported>true</async-supported>
 	</servlet>
+	
 	<servlet-mapping>
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>

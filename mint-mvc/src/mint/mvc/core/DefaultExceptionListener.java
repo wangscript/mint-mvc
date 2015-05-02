@@ -6,9 +6,10 @@ import java.io.PrintWriter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
+/** 
  * Default exception handler which just print the exception trace on web page.
- * 
+ * @author LiangWei(895925636@qq.com)
+ * @date 2015年5月2日 下午2:14:02 
  * @author Michael Liao (askxuefeng@gmail.com)
  */
 class DefaultExceptionListener implements ExceptionListener {

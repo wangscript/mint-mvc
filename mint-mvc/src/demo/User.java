@@ -25,13 +25,16 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public int getGender() {
-		return gender;
-	}
 	public String[] getEmails() {
 		return emails;
 	}
 	public void setEmails(String[] emails) {
 		this.emails = emails;
+	}
+	public int getGender() {
+		return gender;
+	}
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 }

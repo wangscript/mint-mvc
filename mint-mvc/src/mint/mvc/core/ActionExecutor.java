@@ -383,6 +383,14 @@ class ActionExecutor {
 		}
 	}
 	
+	/**
+	 * 处理action执行时发生的异常
+	 * @param request
+	 * @param response
+	 * @param ex
+	 * @throws ServletException
+	 * @throws IOException
+	 */
 	private void handleException(HttpServletRequest request, HttpServletResponse response, Exception ex) throws ServletException, IOException {
 		try {
 			exceptionListener.handle(request, response, ex);

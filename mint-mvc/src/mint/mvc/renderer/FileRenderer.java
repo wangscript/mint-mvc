@@ -47,9 +47,18 @@ public class FileRenderer extends Renderer {
 
     @Override
     public void render(ServletContext context, HttpServletRequest request, HttpServletResponse response) throws Exception {
-        if (file==null || !file.exists() || !file.isFile() || file.length()>Integer.MAX_VALUE) {
+        if (file == null || !file.exists() || !file.isFile() || file.length()>Integer.MAX_VALUE) {
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
+        }
+
+        /*静态文件缓存*/
+        if(cacheControl != null){
+        	response.setHeader("Cache-Control", cacheControl);
+        }
+        
+        if(connection != null){
+        	response.setHeader("Connection", connection);
         }
         
         if(lastModifiedCheck){
@@ -63,15 +72,6 @@ public class FileRenderer extends Renderer {
         	/*lastModified 精确到毫秒，但是ifModifiedSince只精确到秒*/
         	lastModified = lastModified+1000;
         	response.setDateHeader("Last-Modified", lastModified);
-        }
-
-        /*静态文件缓存*/
-        if(cacheControl != null){
-        	response.setHeader("Cache-Control", cacheControl);
-        }
-        
-        if(connection != null){
-        	response.setHeader("Connection", connection);
         }
         
         String mime = contentType;

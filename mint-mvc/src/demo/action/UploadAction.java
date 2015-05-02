@@ -25,7 +25,7 @@ public class UploadAction {
 	 * 文件将会上传到web.xml配置文件中指定的临时目录
 	 */
 	@MultipartConfig(attributeName = "files", limitSize = 1024*1024*1024)
-	@Mapping(urls="/index", method="post")
+	@Mapping(urls="", method="post")
 	public String index(MultipartParameter[] files, String author){
 		String fileParam = "";
 		String commonParam = "";
@@ -40,7 +40,7 @@ public class UploadAction {
 			}
 		}
 		
-		System.out.println(author);
+		System.out.println(commonParam);
 		
 		return fileParam+commonParam;
 	}
