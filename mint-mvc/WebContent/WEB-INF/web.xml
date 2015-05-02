@@ -15,7 +15,7 @@
 			<param-value>max-age=1800</param-value>
 		</init-param>
 		
-		<!-- 处理静态文件时是否想服务器询问文件的修改时间，非必要。boolean类型，默认为true。 -->
+		<!-- 处理静态文件是否向服务器询问文件的修改时间，非必要。boolean类型，默认为true。 -->
 		<init-param>
 			<param-name>staticFileLastModifiedCheck</param-name>
 			<param-value>true</param-value>

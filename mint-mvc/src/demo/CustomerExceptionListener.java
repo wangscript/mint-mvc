@@ -11,7 +11,7 @@ public class CustomerExceptionListener implements ExceptionListener{
 	 */
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response, Exception e) throws Exception {
-		System.out.println("server serious exception has occurred,check emali for detail.");
+		System.out.println("server serious exception has occurred,check email for detail.");
 		e.printStackTrace();
 	}
 
