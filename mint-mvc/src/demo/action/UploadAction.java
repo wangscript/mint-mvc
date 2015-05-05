@@ -1,8 +1,8 @@
 package demo.action;
 
-import mint.mvc.core.annotation.BaseMapping;
-import mint.mvc.core.annotation.Mapping;
-import mint.mvc.core.annotation.MultipartConfig;
+import mint.mvc.annotation.BaseMapping;
+import mint.mvc.annotation.Mapping;
+import mint.mvc.annotation.MultipartConfig;
 import mint.mvc.core.upload.MultipartParameter;
 
 

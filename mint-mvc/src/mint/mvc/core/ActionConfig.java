@@ -13,8 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import mint.mvc.core.annotation.MultipartConfig;
-import mint.mvc.core.annotation.ReturnJson;
+import mint.mvc.annotation.MultipartConfig;
+import mint.mvc.annotation.ReturnJson;
 import mint.mvc.util.GetArgumentName;
 
 /**

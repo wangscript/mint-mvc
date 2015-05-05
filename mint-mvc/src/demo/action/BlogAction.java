@@ -5,8 +5,8 @@ import java.io.IOException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
-import mint.mvc.core.annotation.BaseMapping;
-import mint.mvc.core.annotation.Mapping;
+import mint.mvc.annotation.BaseMapping;
+import mint.mvc.annotation.Mapping;
 import demo.Blog;
 
 @BaseMapping("/blog")

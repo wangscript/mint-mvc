@@ -5,7 +5,7 @@ import java.util.regex.Pattern;
 
 import com.sun.istack.internal.logging.Logger;
 
-import mint.mvc.core.annotation.InterceptorMapping;
+import mint.mvc.annotation.InterceptorMapping;
 
 /**
  * 

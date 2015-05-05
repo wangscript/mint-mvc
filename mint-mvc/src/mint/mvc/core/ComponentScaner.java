@@ -4,8 +4,8 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import mint.mvc.core.annotation.BaseMapping;
-import mint.mvc.core.annotation.InterceptorMapping;
+import mint.mvc.annotation.BaseMapping;
+import mint.mvc.annotation.InterceptorMapping;
 import mint.mvc.util.ClassScaner;
 
 /**

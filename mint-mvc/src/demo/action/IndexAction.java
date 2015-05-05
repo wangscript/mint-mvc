@@ -1,7 +1,7 @@
 package demo.action;
 
-import mint.mvc.core.annotation.BaseMapping;
-import mint.mvc.core.annotation.Mapping;
+import mint.mvc.annotation.BaseMapping;
+import mint.mvc.annotation.Mapping;
 
 @BaseMapping("/")
 public class IndexAction {

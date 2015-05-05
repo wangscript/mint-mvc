@@ -6,9 +6,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
-import mint.mvc.core.annotation.BaseMapping;
-import mint.mvc.core.annotation.Mapping;
-import mint.mvc.core.annotation.ReturnJson;
+import mint.mvc.annotation.BaseMapping;
+import mint.mvc.annotation.Mapping;
+import mint.mvc.annotation.ReturnJson;
 import mint.mvc.renderer.FileRenderer;
 import mint.mvc.renderer.TemplateRenderer;
 import demo.Blog;

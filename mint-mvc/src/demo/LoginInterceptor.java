@@ -2,11 +2,11 @@ package demo;
 
 import javax.servlet.http.HttpServletRequest;
 
+import mint.mvc.annotation.InterceptorMapping;
+import mint.mvc.annotation.InterceptorOrder;
 import mint.mvc.core.ActionContext;
 import mint.mvc.core.Interceptor;
 import mint.mvc.core.InterceptorChain;
-import mint.mvc.core.annotation.InterceptorMapping;
-import mint.mvc.core.annotation.InterceptorOrder;
 
 /** 
  * 拦截器的定义和用法
