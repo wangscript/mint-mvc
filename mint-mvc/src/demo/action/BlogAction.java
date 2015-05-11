@@ -76,6 +76,10 @@ public class BlogAction {
 				"userId:"+userId;
 	}
 	
+	/**
+	 * 演示初始化内置参数
+	 * @param resp
+	 */
 	@Mapping(urls="/notFound", method="get")
 	public void blogNotFound(HttpServletResponse resp){
 		try {
