@@ -148,31 +148,31 @@ public class BlogAction {
 		<servlet-name>dispatcher</servlet-name>
 		<servlet-class>mint.mvc.core.ServiceServlet</servlet-class>
 		
-		<!-- 静态文件缓存设置，非必要。字符串类型，默认为"max-age=600"。 -->
+		<!-- the static file cache settings，non-essential.string, default to "max-age=600"。 -->
 		<init-param>
 			<param-name>staticFileCacheControl</param-name>
 			<param-value>max-age=1800</param-value>
 		</init-param>
 		
-		<!-- 处理静态文件是否向服务器询问文件的修改时间，非必要。boolean类型，默认为true。 -->
+		<!-- whether ask server for "LastModified" while handling a static file request.non-essential.boolean.default to true。 -->
 		<init-param>
 			<param-name>staticFileLastModifiedCheck</param-name>
 			<param-value>true</param-value>
 		</init-param>
 		
-		<!-- action 和 拦截器 所在的包，必要。多个路径用";"分开，目录会被递归扫描 -->
+		<!-- packages for action and interceptor.Necessary.Use ";" to separate multiple packages. packages will be recursively scan-->
 		<init-param>
 			<param-name>actionPackages</param-name>
 			<param-value>demo</param-value>
 		</init-param>
 		
-		<!-- 上传文件的临时存放目录，需要上传功能时必要 -->
+		<!-- temporary directory for uploading files.It's necessary when you need uploading function -->
 		<init-param>
 			<param-name>uploadTemp</param-name>
 			<param-value>D:/static/</param-value>
 		</init-param>
 		
-		<!-- 自定义异常监听器，非必要。继承mint.mvc.core.ExceptionListener -->
+		<!-- custom exception listener.non-essential.extends from mint.mvc.core.ExceptionListener -->
 		<init-param>
 			<param-name>exceptionListener</param-name>
 			<param-value>demo.CustomerExceptionListener</param-value>
@@ -180,7 +180,7 @@ public class BlogAction {
 		
 		<load-on-startup>0</load-on-startup>
 		
-		<!-- servlet3异步处理请求功能。需要上传功能时必要 -->
+		<!-- set to "true" when you need uploading function -->
 		<async-supported>true</async-supported>
 	</servlet>
 	
