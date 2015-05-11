@@ -46,7 +46,7 @@ public class BlogAction {
 	
 	/**
 	 * To initialize an array type arguments (excerpt from the blog)
-	 * accepts parameters like "urls=url1?urls=url2" or "urls[]=url1?urls[]=url2"
+	 * accepts parameters like "urls=url1&urls=url2" or "urls[]=url1&urls[]=url2"
 	 *
 	 * @param urls
 	 * @return
